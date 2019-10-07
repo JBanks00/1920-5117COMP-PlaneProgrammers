@@ -38,6 +38,22 @@ public class Menu {
 				break;
 			case "2":
 				System.out.println("List all phases of flight data");
+				
+				Serialisation ser2 = new Serialisation(new File("src/aircraftDataV1/Data/aviationdata.csv"));
+
+				ArrayList<String> phases = new ArrayList<String>();
+				
+				for (int i = 0; i < ser2.getArrayList().size(); i++) {
+					System.out.println(ser2.getArrayList().get(i).getMake());
+					if (!(phases.contains(ser2.getArrayList().get(i).getPhases()))) {
+						phases.add(ser2.getArrayList().get(i).getPhases());
+					}
+				}
+				Collections.sort(phases);
+				for (String string : phases) {
+					System.out.println(string);
+				}
+				
 				break;
 			case "3":
 				System.out.println("Display reports for specified phases of flight");
@@ -47,8 +63,8 @@ public class Menu {
 				break;
 			case "X":
 				try {
-					Serialisation ser2 = new Serialisation(new File("src/aircraftDataV1/Data/aviationdata.csv"));
-					System.out.println(ser2.getArrayList().get(1).getString());
+					Serialisation serx = new Serialisation(new File("src/aircraftDataV1/Data/aviationdata.csv"));
+					System.out.println(serx.getArrayList().get(1).getString());
 
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
