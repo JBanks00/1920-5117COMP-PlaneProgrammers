@@ -21,6 +21,7 @@ public class Serialisation {
 		
 		Scanner scanner = new Scanner(data);
 		if(data.canRead()) {
+			scanner.nextLine();
 			while(scanner.hasNext()) {
 				String csvString = scanner.nextLine();
 				CSVObject obj = new CSVObject(csvString);

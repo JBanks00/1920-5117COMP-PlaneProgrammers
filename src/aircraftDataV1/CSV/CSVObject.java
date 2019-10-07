@@ -47,4 +47,10 @@ public class CSVObject {
 	public String getString() {
 		return EventID + " " + EventDate + " " + AirportCode + " " + Make + " " + Model;
 	}
+	
+	public String getDate() {
+		String dateString = this.EventID.substring(0,4);
+
+		return dateString;
+	}
 }
