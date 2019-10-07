@@ -9,10 +9,8 @@ public class CSVObject {
 			BroadPhaseOfFlight, ReportStatus, PublicationDate;
 
 	public CSVObject(String csv) {
-		String[] split = csv.split(",", 32);
-		for (int i = 0; i < split.length; i ++) {
-			System.out.println(split[i]);
-		}
+		String[] split = csv.split("(,(?! ))", -1);
+
 		EventID = split[0];
 		InvestigationType = split[1];
 		AccidentNumber = split[2];

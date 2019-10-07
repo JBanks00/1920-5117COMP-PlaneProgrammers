@@ -44,12 +44,11 @@ public class Menu {
 				ArrayList<String> phases = new ArrayList<String>();
 				
 				for (int i = 0; i < ser2.getArrayList().size(); i++) {
-					System.out.println(ser2.getArrayList().get(i).getMake());
 					if (!(phases.contains(ser2.getArrayList().get(i).getPhases()))) {
 						phases.add(ser2.getArrayList().get(i).getPhases());
 					}
 				}
-				Collections.sort(phases);
+				//Collections.sort(phases);
 				for (String string : phases) {
 					System.out.println(string);
 				}
