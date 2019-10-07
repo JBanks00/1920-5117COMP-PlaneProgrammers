@@ -2,7 +2,7 @@ package aircraftDataV1.CSV;
 
 public class CSVObject {
 
-	private String EventID, InvestigationType, AccidentNumber, EventDate, Location, Country, Latitude, Longitude,
+	public String EventID, InvestigationType, AccidentNumber, EventDate, Location, Country, Latitude, Longitude,
 			AirportCode, AirportName, InjurySeverity, AircraftDamage, AircraftCategory, RegistrationNumber, Make, Model,
 			AmateurBuilt, NumberOfEngines, EngineType, FARDescription, Schedule, PurposeOfFlight, AirCarrier,
 			TotalFatalInjuries, TotalSeriousInjuries, TotalMinorInjuries, TotalUninjured, WeatherCondition,
@@ -43,5 +43,8 @@ public class CSVObject {
 		PublicationDate = split[29];
 
 	}
-
+	
+	public String getString() {
+		return EventID + " " + EventDate + " " + AirportCode + " " + Make + " " + Model;
+	}
 }

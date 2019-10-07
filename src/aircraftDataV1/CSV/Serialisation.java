@@ -29,7 +29,7 @@ public class Serialisation {
 		}else {
 			System.out.println("Error reading file");
 		}
-
+		scanner.close();
 		
 	}
 	
