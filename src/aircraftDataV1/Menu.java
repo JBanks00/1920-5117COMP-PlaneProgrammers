@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Scanner;
 
+import aircraftDataV1.CSV.CSVObject;
 import aircraftDataV1.CSV.Serialisation;
 
 public class Menu {
@@ -45,6 +45,8 @@ public class Menu {
 				
 				for (int i = 0; i < ser2.getArrayList().size(); i++) {
 					if (!(phases.contains(ser2.getArrayList().get(i).getPhases()))) {
+						//CSVObject object = ser2.getArrayList().get(i);
+						//System.out.println(object.toString());
 						phases.add(ser2.getArrayList().get(i).getPhases());
 					}
 				}

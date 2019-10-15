@@ -8,16 +8,12 @@ import java.util.Scanner;
 public class Serialisation {
 
 	public String fillInHere;
-	private File data;
 	private ArrayList<CSVObject> objects = new ArrayList<CSVObject>();
-
 	public String toCSVString() {
 		return fillInHere;
 	}
 	
 	public Serialisation(File data) throws FileNotFoundException {
-		
-		this.data = data;
 		
 		Scanner scanner = new Scanner(data);
 		if(data.canRead()) {
@@ -37,4 +33,5 @@ public class Serialisation {
 	public ArrayList<CSVObject> getArrayList() {
 		return objects;
 	}
+	
 }

@@ -1,6 +1,12 @@
 package aircraftDataV1.CSV;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class CSVObject {
+	public enum ParsePhase {
+		QUOTES, CHARS
+	};
 
 	public String EventID, InvestigationType, AccidentNumber, EventDate, Location, Country, Latitude, Longitude,
 			AirportCode, AirportName, InjurySeverity, AircraftDamage, AircraftCategory, RegistrationNumber, Make, Model,
@@ -9,55 +15,83 @@ public class CSVObject {
 			BroadPhaseOfFlight, ReportStatus, PublicationDate;
 
 	public CSVObject(String csv) {
-		String[] split = csv.split("(,(?! ))", -1);
-
-		EventID = split[0];
-		InvestigationType = split[1];
-		AccidentNumber = split[2];
-		EventDate = split[3];
-		Location = split[4];
-		Country = split[5];
-		Latitude = split[6];
-		Longitude = split[7];
-		AirportCode = split[8];
-		AirportName = split[9];
-		InjurySeverity = split[10];
-		AircraftDamage = split[11];
-		AircraftCategory = split[12];
-		RegistrationNumber = split[13];
-		Make = split[14];
-		Model = split[15];
-		AmateurBuilt = split[16];
-		NumberOfEngines = split[17];
-		EngineType = split[18];
-		FARDescription = split[19];
-		Schedule = split[20];
-		PurposeOfFlight = split[21];
-		AirCarrier = split[22];
-		TotalFatalInjuries = split[23];
-		TotalSeriousInjuries = split[24];
-		TotalMinorInjuries = split[25];
-		TotalUninjured = split[26];
-		WeatherCondition = split[27];
-		BroadPhaseOfFlight = split[28];
-		ReportStatus = split[29];
-		PublicationDate = split[30];
+		List<String> splits = splitCSV(csv);
+		//System.out.println(csv);
+		//System.out.println(splits.get(30));
+		
+//		String[] split = csv.split("((?<! ),(?! ))", -1);
+		
+		EventID = splits.get(0);
+		InvestigationType = splits.get(1);
+		AccidentNumber = splits.get(2);
+		EventDate = splits.get(3);
+		Location = splits.get(4);
+		Country = splits.get(5);
+		Latitude = splits.get(6);
+		Longitude = splits.get(7);
+		AirportCode = splits.get(8);
+		AirportName = splits.get(9);
+		InjurySeverity = splits.get(10);
+		AircraftDamage = splits.get(11);
+		AircraftCategory = splits.get(12);
+		RegistrationNumber = splits.get(13);
+		Make = splits.get(14);
+		Model = splits.get(15);
+		AmateurBuilt = splits.get(16);
+		NumberOfEngines = splits.get(17);
+		EngineType = splits.get(18);
+		FARDescription = splits.get(19);
+		Schedule = splits.get(20);
+		PurposeOfFlight = splits.get(21);
+		AirCarrier = splits.get(22);
+		TotalFatalInjuries = splits.get(23);
+		TotalSeriousInjuries = splits.get(24);
+		TotalMinorInjuries = splits.get(25);
+		TotalUninjured = splits.get(26);
+		WeatherCondition = splits.get(27);
+		BroadPhaseOfFlight = splits.get(28);
+		ReportStatus = splits.get(29);
+		PublicationDate = splits.get(30);
 
 	}
-	
+
+	public static List<String> splitCSV(String csv) {
+		List<String> splits = new ArrayList<String>();
+
+		ParsePhase phase = ParsePhase.CHARS;
+		StringBuffer buf = new StringBuffer();
+
+		for (char c : csv.toCharArray()) {
+			if (phase != ParsePhase.QUOTES) {
+				if (c == ',') {
+					splits.add(buf.toString());
+					buf = new StringBuffer();
+				} else if (c == '\"')
+					phase = ParsePhase.QUOTES;
+				else
+					buf.append(c);
+			} else if (c == '\"') {
+				phase = ParsePhase.CHARS;
+			} else
+				buf.append(c);
+		}
+		splits.add(buf.toString()); // add last string
+		return splits;
+	}
+
 	public String getString() {
 		return EventID + " " + EventDate + " " + AirportCode + " " + Make + " " + Model;
 	}
-	
+
 	public String getMake() {
 		return this.Make;
 	}
-	
+
 	public String getDate() {
-		String dateString = this.EventID.substring(0,4);
+		String dateString = this.EventID.substring(0, 4);
 		return dateString;
 	}
-	
+
 	public String getPhases() {
 		String flightPhases = this.BroadPhaseOfFlight;
 		return flightPhases;
