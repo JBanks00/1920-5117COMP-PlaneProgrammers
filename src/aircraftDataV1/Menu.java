@@ -94,4 +94,37 @@ public class Menu {
 
 		return choice.toUpperCase();
 	}
+	
+	public static void accidentSummary() throws FileNotFoundException {
+
+		System.out.println("Enter option to view:");
+		System.out.println("i) killed everyone aboard");
+		System.out.println("ii) were deadly, but survivors >= perished");
+		System.out.println("iii) were not deadly, but resulted in serious or minor injuries");
+		System.out.println("iv) resulted in no fatalities or injuries");
+		System.out.println(">");
+		String entry = userInput.nextLine();
+		System.out.printf(entry);
+
+		if (entry.equals("i")) {
+		//
+		//
+		if (entry.equals("ii")) {
+		//
+		//
+		if (entry.equals("iii")) {
+		//
+		//
+		if (entry.equals("iv")) {
+		Serialisation ser = new Serialisation(new File("src/aircraftDataV1/Data/aviationdata.csv"));
+		System.out.println(ser.getArrayList().get(25).getString());
+		}
+		}
+
+		}
+		} else {
+		System.out.println("Invalid choice entered, please try again.");
+		}
+	}
+	
 }
