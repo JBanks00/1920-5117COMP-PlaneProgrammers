@@ -96,4 +96,21 @@ public class CSVObject {
 		String flightPhases = this.BroadPhaseOfFlight;
 		return flightPhases;
 	}
+	public String getTotalFatalInjuries() {
+		String totalFatalInjuries= this.TotalFatalInjuries;
+		return totalFatalInjuries;
+	}
+	public String getTotalSeriousInjuries() {
+		String totalSeriousInjuries= this.TotalSeriousInjuries;
+		return totalSeriousInjuries;
+	}
+	public String getTotalMinorInjuries() {
+		String TotalMinorInjuries= this.TotalMinorInjuries;
+		return TotalMinorInjuries;
+	}
+	
+	
+	
+	
+	
 }
