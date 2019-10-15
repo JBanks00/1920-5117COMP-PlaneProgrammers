@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-import aircraftDataV1.CSV.CSVObject;
 import aircraftDataV1.CSV.Serialisation;
 
 public class Menu {
