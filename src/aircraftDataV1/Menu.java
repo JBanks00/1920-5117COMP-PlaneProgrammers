@@ -12,15 +12,15 @@ public class Menu {
 
 	private static boolean menuLoop = true;
 	private static Scanner userInput = new Scanner(System.in);
+	private static Serialisation ser = AircraftCrash.getSer();
 
-	
 	public static void display() throws FileNotFoundException {
+		
 		while (menuLoop) {
 			switch (menuChoice()) {
 			case "1":
 				System.out.println("Below are the years from which we have data:");
 				
-				Serialisation ser = new Serialisation(new File("src/aircraftDataV1/Data/aviationdata.csv"));
 				
 				ArrayList<String> years = new ArrayList<String>();
 				
@@ -38,15 +38,13 @@ public class Menu {
 			case "2":
 				System.out.println("List all phases of flight data");
 				
-				Serialisation ser2 = new Serialisation(new File("src/aircraftDataV1/Data/aviationdata.csv"));
-
 				ArrayList<String> phases = new ArrayList<String>();
 				
-				for (int i = 0; i < ser2.getArrayList().size(); i++) {
-					if (!(phases.contains(ser2.getArrayList().get(i).getPhases()))) {
+				for (int i = 0; i < ser.getArrayList().size(); i++) {
+					if (!(phases.contains(ser.getArrayList().get(i).getPhases()))) {
 						//CSVObject object = ser2.getArrayList().get(i);
 						//System.out.println(object.toString());
-						phases.add(ser2.getArrayList().get(i).getPhases());
+						phases.add(ser.getArrayList().get(i).getPhases());
 					}
 				}
 				//Collections.sort(phases);
@@ -63,14 +61,7 @@ public class Menu {
 				accidentSummary();
 				break;
 			case "X":
-				try {
-					Serialisation serx = new Serialisation(new File("src/aircraftDataV1/Data/aviationdata.csv"));
-					System.out.println(serx.getArrayList().get(1).getString());
-
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					System.err.println("Error in loading Data File");
-				}
+				System.out.println(ser.getArrayList().get(1).getString());
 					break;
 			case "Q":
 				menuLoop = false;
@@ -136,7 +127,6 @@ public class Menu {
 			
 			
 			
-		Serialisation ser = new Serialisation(new File("src/aircraftDataV1/Data/aviationdata.csv"));
 		System.out.println(ser.getArrayList().get(25).getString());
 		}
 		}
@@ -151,15 +141,14 @@ public class Menu {
 	public static void totalFatal() throws FileNotFoundException {
 		// TODO Auto-generated method stub
 	
-		Serialisation ser3 = new Serialisation(new File("src/aircraftDataV1/Data/aviationdata.csv"));
 
 		
 		
 		ArrayList<String> totalFatal = new ArrayList<String>();
 		
-		for (int i = 0; i < ser3.getArrayList().size(); i++) {
-			if (!(totalFatal.contains(ser3.getArrayList().get(i).getTotalFatalInjuries()))) {
-				totalFatal.add(ser3.getArrayList().get(i).getTotalFatalInjuries());
+		for (int i = 0; i < ser.getArrayList().size(); i++) {
+			if (!(totalFatal.contains(ser.getArrayList().get(i).getTotalFatalInjuries()))) {
+				totalFatal.add(ser.getArrayList().get(i).getTotalFatalInjuries());
 			}
 		}
 		//Collections.sort(phases);
@@ -177,8 +166,8 @@ public class Menu {
 		
 		ArrayList<String> totalSerious = new ArrayList<String>();
 		
-		for (int i = 0; i < ser3.getArrayList().size(); i++) {
-			if (!(totalSerious.contains(ser3.getArrayList().get(i).getTotalSeriousInjuries()))) {
+		for (int i = 0; i < ser.getArrayList().size(); i++) {
+			if (!(totalSerious.contains(ser.getArrayList().get(i).getTotalSeriousInjuries()))) {
 				totalSerious.add(ser3.getArrayList().get(i).getTotalSeriousInjuries());
 			}
 		}
@@ -193,15 +182,14 @@ public class Menu {
 	public static void totalMinorInjuries() throws FileNotFoundException {
 		// TODO Auto-generated method stub
 	
-		Serialisation ser3 = new Serialisation(new File("src/aircraftDataV1/Data/aviationdata.csv"));
 
 		
 		
 		ArrayList<String> totalMinor = new ArrayList<String>();
 		
-		for (int i = 0; i < ser3.getArrayList().size(); i++) {
-			if (!(totalMinor.contains(ser3.getArrayList().get(i).getTotalMinorInjuries()))) {
-				totalMinor.add(ser3.getArrayList().get(i).getTotalMinorInjuries());
+		for (int i = 0; i < ser.getArrayList().size(); i++) {
+			if (!(totalMinor.contains(ser.getArrayList().get(i).getTotalMinorInjuries()))) {
+				totalMinor.add(ser.getArrayList().get(i).getTotalMinorInjuries());
 			}
 		}
 		//Collections.sort(phases);
