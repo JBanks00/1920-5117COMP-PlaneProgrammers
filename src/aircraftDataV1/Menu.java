@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
+import aircraftDataV1.CSV.CSVObject;
 import aircraftDataV1.CSV.Serialisation;
 
 public class Menu {
@@ -25,8 +26,8 @@ public class Menu {
 				ArrayList<String> years = new ArrayList<String>();
 				
 				for (int i = 0; i < ser.getArrayList().size(); i++) {
-					if (!(years.contains(ser.getArrayList().get(i).getDate()))) {
-						years.add(ser.getArrayList().get(i).getDate());
+					if (!(years.contains(ser.getArrayList().get(i).getYear()))) {
+						years.add(ser.getArrayList().get(i).getYear());
 					}
 				}
 				Collections.sort(years);
@@ -54,7 +55,29 @@ public class Menu {
 				
 				break;
 			case "3":
-				System.out.println("Display reports for specified phases of flight");
+				ArrayList<CSVObject> reports = new ArrayList<CSVObject>();
+				
+				System.out.println("Please specify a phase of flight to return associated reports:");
+				System.out.print("> ");
+				
+				String selectionPhase = userInput.nextLine();
+				
+				System.out.println("And the year:");
+				System.out.print("> ");
+				
+				String selectionDate = userInput.nextLine();
+				
+				for (int i = 0; i < ser.getArrayList().size(); i++) {
+					if (ser.getArrayList().get(i).getPhases().equals(selectionPhase) && ser.getArrayList().get(i).getYear().equals(selectionDate)) {
+						reports.add(ser.getArrayList().get(i));
+					}
+				}
+			
+				System.out.println("Event ID: \t Event Date: \t Location: \t Reg: \t ");
+				for (CSVObject obj : reports) {
+					System.out.println(obj.genReport());
+				}
+				
 				break;
 			case "4":
 				System.out.println("List accidents(with additional features added)");
@@ -74,7 +97,7 @@ public class Menu {
 	
 	public static String menuChoice() {
 
-		System.out.println("--Air Accident Data Analysis System");
+		System.out.println("\nAir Accident Data Analysis System");
 		System.out.println("Pick:");
 		System.out.println("1. Yearly data");
 		System.out.println("2. Phases of flight");

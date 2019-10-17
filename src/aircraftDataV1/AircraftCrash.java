@@ -11,9 +11,13 @@ public class AircraftCrash {
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		
+		System.out.println("Programme Starting....");
+		
 		ser = new Serialisation(new File("src/aircraftDataV1/Data/aviationdata.csv"));
 
-		Menu.display();
+		System.out.println("Programme Initialised.... \n");
+		
+		Menu.display();	
 
 	}
 	

@@ -86,10 +86,14 @@ public class CSVObject {
 	public String getMake() {
 		return this.Make;
 	}
-
 	public String getDate() {
-		String dateString = this.EventID.substring(0, 4);
+		String dateString = this.EventDate;
 		return dateString;
+	}
+
+	public String getYear() {
+		String yearString = this.EventDate.substring(6, 10);
+		return yearString;
 	}
 
 	public String getPhases() {
@@ -108,7 +112,14 @@ public class CSVObject {
 		String TotalMinorInjuries= this.TotalMinorInjuries;
 		return TotalMinorInjuries;
 	}
-	
+	public String getReports() {
+		String Report = this.ReportStatus;
+		return Report;
+	}
+	public String genReport() {
+		String genReport = EventID + "\t " + this.getDate() + "\t "; 
+		return genReport;
+	}
 	
 	
 	
