@@ -16,11 +16,11 @@ public class CSVObject {
 
 	public CSVObject(String csv) {
 		List<String> splits = splitCSV(csv);
-		//System.out.println(csv);
-		//System.out.println(splits.get(30));
-		
+		// System.out.println(csv);
+		// System.out.println(splits.get(30));
+
 //		String[] split = csv.split("((?<! ),(?! ))", -1);
-		
+
 		EventID = splits.get(0);
 		InvestigationType = splits.get(1);
 		AccidentNumber = splits.get(2);
@@ -86,9 +86,20 @@ public class CSVObject {
 	public String getMake() {
 		return this.Make;
 	}
+
+	public String getReg() {
+		String Reg = this.RegistrationNumber;
+		return Reg;
+	}
+
 	public String getDate() {
 		String dateString = this.EventDate;
 		return dateString;
+	}
+
+	public String getLocation() {
+		String Location = this.Location;
+		return Location;
 	}
 
 	public String getYear() {
@@ -100,28 +111,42 @@ public class CSVObject {
 		String flightPhases = this.BroadPhaseOfFlight;
 		return flightPhases;
 	}
+
 	public String getTotalFatalInjuries() {
-		String totalFatalInjuries= this.TotalFatalInjuries;
+		String totalFatalInjuries = this.TotalFatalInjuries;
 		return totalFatalInjuries;
 	}
+
+	public String getTotalUninjured() {
+		String totalUninjured = this.TotalUninjured;
+		return totalUninjured;
+	}
+
 	public String getTotalSeriousInjuries() {
-		String totalSeriousInjuries= this.TotalSeriousInjuries;
+		String totalSeriousInjuries = this.TotalSeriousInjuries;
 		return totalSeriousInjuries;
 	}
+
 	public String getTotalMinorInjuries() {
-		String TotalMinorInjuries= this.TotalMinorInjuries;
+		String TotalMinorInjuries = this.TotalMinorInjuries;
 		return TotalMinorInjuries;
 	}
+
 	public String getReports() {
 		String Report = this.ReportStatus;
 		return Report;
 	}
+
+	public String getWeather() {
+		String Weather = this.WeatherCondition;
+		return Weather;
+	}
+
 	public String genReport() {
-		String genReport = EventID + "\t " + this.getDate() + "\t "; 
+		String genReport = EventID + "\t " + this.getDate() + "\t " + this.getLocation() + "\t\t\t\t\t\t " + this.getReg()
+				+ "\t\t\t " + this.TotalFatalInjuries + "\t\t " + this.getTotalSeriousInjuries() + "\t\t "
+				+ this.getTotalMinorInjuries() + "\t\t " + this.getTotalUninjured() + "\t\t   " + this.getWeather();
 		return genReport;
 	}
-	
-	
-	
-	
+
 }

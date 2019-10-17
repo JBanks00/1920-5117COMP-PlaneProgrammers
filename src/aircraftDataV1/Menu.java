@@ -16,15 +16,14 @@ public class Menu {
 	private static Serialisation ser = AircraftCrash.getSer();
 
 	public static void display() throws FileNotFoundException {
-		
+
 		while (menuLoop) {
 			switch (menuChoice()) {
 			case "1":
 				System.out.println("Below are the years from which we have data:");
-				
-				
+
 				ArrayList<String> years = new ArrayList<String>();
-				
+
 				for (int i = 0; i < ser.getArrayList().size(); i++) {
 					if (!(years.contains(ser.getArrayList().get(i).getYear()))) {
 						years.add(ser.getArrayList().get(i).getYear());
@@ -34,50 +33,52 @@ public class Menu {
 				for (String string : years) {
 					System.out.println(string);
 				}
-				
+
 				break;
 			case "2":
 				System.out.println("List all phases of flight data");
-				
+
 				ArrayList<String> phases = new ArrayList<String>();
-				
+
 				for (int i = 0; i < ser.getArrayList().size(); i++) {
 					if (!(phases.contains(ser.getArrayList().get(i).getPhases()))) {
-						//CSVObject object = ser2.getArrayList().get(i);
-						//System.out.println(object.toString());
+						// CSVObject object = ser2.getArrayList().get(i);
+						// System.out.println(object.toString());
 						phases.add(ser.getArrayList().get(i).getPhases());
 					}
 				}
-				//Collections.sort(phases);
+				// Collections.sort(phases);
 				for (String string : phases) {
 					System.out.println(string);
 				}
-				
+
 				break;
 			case "3":
 				ArrayList<CSVObject> reports = new ArrayList<CSVObject>();
-				
+
 				System.out.println("Please specify a phase of flight to return associated reports:");
 				System.out.print("> ");
-				
+
 				String selectionPhase = userInput.nextLine();
-				
+
 				System.out.println("And the year:");
 				System.out.print("> ");
-				
+
 				String selectionDate = userInput.nextLine();
-				
+
 				for (int i = 0; i < ser.getArrayList().size(); i++) {
-					if (ser.getArrayList().get(i).getPhases().equals(selectionPhase) && ser.getArrayList().get(i).getYear().equals(selectionDate)) {
+					if (ser.getArrayList().get(i).getPhases().equals(selectionPhase)
+							&& ser.getArrayList().get(i).getYear().equals(selectionDate)) {
 						reports.add(ser.getArrayList().get(i));
 					}
 				}
-			
-				System.out.println("Event ID: \t Event Date: \t Location: \t Reg: \t ");
+
+				System.out.println(
+						"Event ID: \t Event Date: \t Location: \t\t\t\t\t\t Reg: \t\t\t Total Fatal: \t Total Serious:  Total Minor: \t Total Uninjured   Weather:");
 				for (CSVObject obj : reports) {
 					System.out.println(obj.genReport());
 				}
-				
+
 				break;
 			case "4":
 				System.out.println("List accidents(with additional features added)");
@@ -85,7 +86,7 @@ public class Menu {
 				break;
 			case "X":
 				System.out.println(ser.getArrayList().get(1).getString());
-					break;
+				break;
 			case "Q":
 				menuLoop = false;
 				break;
@@ -94,7 +95,7 @@ public class Menu {
 			}
 		}
 	}
-	
+
 	public static String menuChoice() {
 
 		System.out.println("\nAir Accident Data Analysis System");
@@ -110,7 +111,7 @@ public class Menu {
 
 		return choice.toUpperCase();
 	}
-	
+
 	public static void accidentSummary() throws FileNotFoundException {
 
 		System.out.println("Enter option to view:");
@@ -123,105 +124,85 @@ public class Menu {
 		System.out.printf(entry);
 
 		if (entry.equals("i")) {
-			
-			//killed everyone aboard
-			//if serious minor & uninjured is 0 crash is fatal
+
+			// killed everyone aboard
+			// if serious minor & uninjured is 0 crash is fatal
 			totalFatal();
 			System.out.println("///////////////////////////////////////////// Total serious:");
 			totalSeriousInjuries();
 			System.out.println("///////////////////////////////////////////// Total minor:");
 			totalMinorInjuries();
-			
-		
-		
-			
-		if (entry.equals("ii")) {
-		//i) were deadly, but survivors >= perished")
-		//
-		if (entry.equals("iii")) {
-		//iii) were not deadly, but resulted in serious or minor injuries
-		//
-		if (entry.equals("iv")) {
-			//iv) resulted in no fatalities or injuries"
-			
-			
-			
-			System.out.println("List all phases of flight data");
-			
-			
-			
-		System.out.println(ser.getArrayList().get(25).getString());
-		}
+
+			if (entry.equals("ii")) {
+				// i) were deadly, but survivors >= perished")
+				//
+				if (entry.equals("iii")) {
+					// iii) were not deadly, but resulted in serious or minor injuries
+					//
+					if (entry.equals("iv")) {
+						// iv) resulted in no fatalities or injuries"
+
+						System.out.println("List all phases of flight data");
+
+						System.out.println(ser.getArrayList().get(25).getString());
+					}
+				}
+
+			}
+		} else {
+			System.out.println("Invalid choice entered, please try again.");
 		}
 
-		}
-		} else {
-		System.out.println("Invalid choice entered, please try again.");
-		}
-		
 	}
 
 	public static void totalFatal() throws FileNotFoundException {
 		// TODO Auto-generated method stub
-	
 
-		
-		
 		ArrayList<String> totalFatal = new ArrayList<String>();
-		
+
 		for (int i = 0; i < ser.getArrayList().size(); i++) {
 			if (!(totalFatal.contains(ser.getArrayList().get(i).getTotalFatalInjuries()))) {
 				totalFatal.add(ser.getArrayList().get(i).getTotalFatalInjuries());
 			}
 		}
-		//Collections.sort(phases);
+		// Collections.sort(phases);
 		for (String string : totalFatal) {
 			System.out.println(string);
 		}
 	}
-	
+
 	public static void totalSeriousInjuries() throws FileNotFoundException {
 		// TODO Auto-generated method stub
-	
+
 		Serialisation ser3 = new Serialisation(new File("src/aircraftDataV1/Data/aviationdata.csv"));
 
-		
-		
 		ArrayList<String> totalSerious = new ArrayList<String>();
-		
+
 		for (int i = 0; i < ser.getArrayList().size(); i++) {
 			if (!(totalSerious.contains(ser.getArrayList().get(i).getTotalSeriousInjuries()))) {
 				totalSerious.add(ser3.getArrayList().get(i).getTotalSeriousInjuries());
 			}
 		}
-		//Collections.sort(phases);
+		// Collections.sort(phases);
 		for (String string : totalSerious) {
 			System.out.println(string);
 		}
 	}
 
-	
-	
 	public static void totalMinorInjuries() throws FileNotFoundException {
 		// TODO Auto-generated method stub
-	
 
-		
-		
 		ArrayList<String> totalMinor = new ArrayList<String>();
-		
+
 		for (int i = 0; i < ser.getArrayList().size(); i++) {
 			if (!(totalMinor.contains(ser.getArrayList().get(i).getTotalMinorInjuries()))) {
 				totalMinor.add(ser.getArrayList().get(i).getTotalMinorInjuries());
 			}
 		}
-		//Collections.sort(phases);
+		// Collections.sort(phases);
 		for (String string : totalMinor) {
 			System.out.println(string);
 		}
 	}
-	
-	
-	
-	
+
 }
