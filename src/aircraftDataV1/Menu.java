@@ -82,7 +82,7 @@ public class Menu {
 		System.out.println("4. Accident Summary");
 		System.out.println("X. TEST OPTION");
 		System.out.println("Q. Quit");
-		System.out.println(">");
+		System.out.print("> ");
 		String choice = userInput.nextLine();
 
 		return choice.toUpperCase();
@@ -95,7 +95,7 @@ public class Menu {
 		System.out.println("ii) were deadly, but survivors >= perished");
 		System.out.println("iii) were not deadly, but resulted in serious or minor injuries");
 		System.out.println("iv) resulted in no fatalities or injuries");
-		System.out.println(">");
+		System.out.print("> ");
 		String entry = userInput.nextLine();
 		System.out.printf(entry);
 
