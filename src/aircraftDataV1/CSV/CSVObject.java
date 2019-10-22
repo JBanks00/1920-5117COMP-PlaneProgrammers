@@ -173,5 +173,16 @@ public class CSVObject {
 				+ StringUtils.rightPad(String.valueOf(this.getTotalUninjured()), 17) + StringUtils.rightPad(this.getWeather(), 10);
 		return genReport;
 	}
+	
+	public String regInfo() {
+		String genReport = EventID + "\t " + this.getDate() + "\t "
+				+ StringUtils.rightPad((StringUtils.abbreviate(this.getLocation(), 20)), 25)
+				+ StringUtils.rightPad(this.getReg(), 8)
+				+ StringUtils.rightPad(this.TotalFatalInjuries, 14)
+				+ StringUtils.rightPad(String.valueOf(this.getTotalSeriousInjuries()), 16)
+				+ StringUtils.rightPad(String.valueOf(this.getTotalMinorInjuries()), 14)
+				+ StringUtils.rightPad(String.valueOf(this.getTotalUninjured()), 17) + StringUtils.rightPad(this.getWeather(), 10);
+		return genReport;
+	}
 
 }

@@ -93,6 +93,9 @@ public class Menu {
 				System.out.println("List accidents(with additional features added)");
 				accidentSummary();
 				break;
+			case "5":
+				regSearch();
+				break;
 			case "X":
 				System.out.println(ser.getArrayList().get(1).getString());
 				break;
@@ -113,12 +116,36 @@ public class Menu {
 		System.out.println("2. Phases of flight");
 		System.out.println("3. Phases of flight reports");
 		System.out.println("4. Accident Summary");
+		System.out.println("5. Plane Registration Seach");
 		System.out.println("X. TEST OPTION");
 		System.out.println("Q. Quit");
 		System.out.print("> ");
 		String choice = userInput.nextLine();
 
 		return choice.toUpperCase();
+	}
+
+	public static void regSearch() throws FileNotFoundException {
+		ArrayList<CSVObject> planes = new ArrayList<CSVObject>();
+		
+		System.out.println("Please enter the desired plane Registration:");
+		System.out.print("> ");
+		
+		String planeSearch = userInput.next();
+
+		for (int i = 0; i < ser.getArrayList().size(); i++) {
+			if (ser.getArrayList().get(i).getReg().equals(planeSearch)) {
+				planes.add(ser.getArrayList().get(i));
+			}
+		}
+		System.out.println("Event ID:        Event Date:     " + StringUtils.rightPad("Location:", 25)
+		+ StringUtils.rightPad("Reg:", 8) + StringUtils.rightPad("Total Fatal:", 14)
+		+ StringUtils.rightPad("Total Serious:", 16) + StringUtils.rightPad("Total Minor:", 14)
+		+ StringUtils.rightPad("Total Uninjured", 17) + StringUtils.rightPad("Weather:", 10));
+		
+		for (CSVObject obj : planes) {
+			System.out.println(obj.regInfo());
+		}
 	}
 
 	public static void accidentSummary() throws FileNotFoundException {
@@ -144,8 +171,7 @@ public class Menu {
 			totalMinorInjuries();
 			System.out.println("///////////////////////////////////////////// Total uninjured:");
 			totalUninjured();
-		}
-		else if (entry.equals("ii")) {
+		} else if (entry.equals("ii")) {
 			// i) were deadly, but survivors >= perished")
 
 			// select one row of data
@@ -164,6 +190,7 @@ public class Menu {
 
 				}
 			}
+			
 			for (CSVObject object : objects) {
 				System.out.println(object.getReports());
 			}
