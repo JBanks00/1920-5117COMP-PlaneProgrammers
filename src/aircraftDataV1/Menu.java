@@ -61,11 +61,7 @@ public class Menu {
 				System.out.println("Please specify a phase of flight to return associated reports:");
 				System.out.print("> ");
 
-<<<<<<< HEAD
-				String selectionPhase = userInput.nextLine();
-=======
 				String selectionPhase = userInput.nextLine().toUpperCase();
->>>>>>> branch 'master' of https://github.com/JBanks00/1920-5117COMP-PlaneProgrammers.git
 
 				System.out.println("And the year:");
 				System.out.print("> ");
@@ -78,10 +74,6 @@ public class Menu {
 						reports.add(ser.getArrayList().get(i));
 					}
 				}
-<<<<<<< HEAD
-
-				System.out.println("Event ID: \t Event Date: \t Location: \t Reg: \t ");
-=======
 				if (reports.size() == 0) {
 					System.out.println("No Matching Data");
 					break;
@@ -91,7 +83,7 @@ public class Menu {
 						+ StringUtils.rightPad("Reg:", 8) + StringUtils.rightPad("Total Fatal:", 14)
 						+ StringUtils.rightPad("Total Serious:", 16) + StringUtils.rightPad("Total Minor:", 14)
 						+ StringUtils.rightPad("Total Uninjured", 17) + StringUtils.rightPad("Weather:", 10));
->>>>>>> branch 'master' of https://github.com/JBanks00/1920-5117COMP-PlaneProgrammers.git
+
 				for (CSVObject obj : reports) {
 					System.out.println(obj.genReport());
 				}
@@ -150,45 +142,31 @@ public class Menu {
 			totalSeriousInjuries();
 			System.out.println("///////////////////////////////////////////// Total minor:");
 			totalMinorInjuries();
-<<<<<<< HEAD
 			System.out.println("///////////////////////////////////////////// Total uninjured:");
 			totalUninjured();
+		}
+		if (entry.equals("ii")) {
+			// i) were deadly, but survivors >= perished")
 
-			if (entry.equals("ii")) {
-				// i) were deadly, but survivors >= perished")
-				
-				
-				//select one row of data
-				//if has serious
-				//if minor+uninjured is > serious
-				
-				
-				ArrayList<CSVObject> objects = new ArrayList<CSVObject>();
-				
+			// select one row of data
+			// if has serious
+			// if minor+uninjured is > serious
 
-				for (int i = 0; i < ser.getArrayList().size(); i++) {
-					int x = (ser.getArrayList().get(i).getTotalUninjured()) + ser.getArrayList().get(i).getTotalMinorInjuries() + ser.getArrayList().get(i).getTotalSeriousInjuries();
-					
-					if(ser.getArrayList().get(i).getTotalSeriousInjuries()<x) {
-						objects.add(ser.getArrayList().get(i));
-						
-					}
+			ArrayList<CSVObject> objects = new ArrayList<CSVObject>();
+
+			for (int i = 0; i < ser.getArrayList().size(); i++) {
+				int x = (ser.getArrayList().get(i).getTotalUninjured())
+						+ ser.getArrayList().get(i).getTotalMinorInjuries()
+						+ ser.getArrayList().get(i).getTotalSeriousInjuries();
+
+				if (ser.getArrayList().get(i).getTotalSeriousInjuries() < x) {
+					objects.add(ser.getArrayList().get(i));
+
 				}
-				for (CSVObject object : objects) {
-					System.out.println(object.getReports());
-				}
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+			}
+			for (CSVObject object : objects) {
+				System.out.println(object.getReports());
+			}
 
 			if (entry.equals("ii")) {
 				// i) were deadly, but survivors >= perished")
@@ -209,17 +187,12 @@ public class Menu {
 		} else {
 			System.out.println("Invalid choice entered, please try again.");
 		}
-
 	}
 
-	public static void totalFatal() throws FileNotFoundException {
-		// TODO Auto-generated method stub
 
-<<<<<<< HEAD
+	public static void totalFatal() throws FileNotFoundException {
+
 		ArrayList<Integer> totalFatal = new ArrayList<Integer>();
-=======
-		ArrayList<String> totalFatal = new ArrayList<String>();
->>>>>>> branch 'master' of https://github.com/JBanks00/1920-5117COMP-PlaneProgrammers.git
 
 		for (int i = 0; i < ser.getArrayList().size(); i++) {
 			if (!(totalFatal.contains(ser.getArrayList().get(i).getTotalFatalInjuries()))) {
@@ -227,26 +200,17 @@ public class Menu {
 			}
 		}
 		// Collections.sort(phases);
-<<<<<<< HEAD
 		for (int i : totalFatal) {
 			System.out.println(i);
-=======
-		for (String string : totalFatal) {
-			System.out.println(string);
->>>>>>> branch 'master' of https://github.com/JBanks00/1920-5117COMP-PlaneProgrammers.git
+
 		}
 	}
 
 	public static void totalSeriousInjuries() throws FileNotFoundException {
-		// TODO Auto-generated method stub
 
 		Serialisation ser3 = new Serialisation(new File("src/aircraftDataV1/Data/aviationdata.csv"));
 
-<<<<<<< HEAD
 		ArrayList<Integer> totalSerious = new ArrayList<Integer>();
-=======
-		ArrayList<String> totalSerious = new ArrayList<String>();
->>>>>>> branch 'master' of https://github.com/JBanks00/1920-5117COMP-PlaneProgrammers.git
 
 		for (int i = 0; i < ser.getArrayList().size(); i++) {
 			if (!(totalSerious.contains(ser.getArrayList().get(i).getTotalSeriousInjuries()))) {
@@ -254,24 +218,16 @@ public class Menu {
 			}
 		}
 		// Collections.sort(phases);
-<<<<<<< HEAD
 		for (int i : totalSerious) {
 			System.out.println(i);
-=======
-		for (String string : totalSerious) {
-			System.out.println(string);
->>>>>>> branch 'master' of https://github.com/JBanks00/1920-5117COMP-PlaneProgrammers.git
+
 		}
 	}
 
 	public static void totalMinorInjuries() throws FileNotFoundException {
 		// TODO Auto-generated method stub
 
-<<<<<<< HEAD
 		ArrayList<Integer> totalMinor = new ArrayList<Integer>();
-=======
-		ArrayList<String> totalMinor = new ArrayList<String>();
->>>>>>> branch 'master' of https://github.com/JBanks00/1920-5117COMP-PlaneProgrammers.git
 
 		for (int i = 0; i < ser.getArrayList().size(); i++) {
 			if (!(totalMinor.contains(ser.getArrayList().get(i).getTotalMinorInjuries()))) {
@@ -279,17 +235,12 @@ public class Menu {
 			}
 		}
 		// Collections.sort(phases);
-<<<<<<< HEAD
 		for (int i : totalMinor) {
 			System.out.println(i);
-=======
-		for (String string : totalMinor) {
-			System.out.println(string);
->>>>>>> branch 'master' of https://github.com/JBanks00/1920-5117COMP-PlaneProgrammers.git
+
 		}
 	}
 
-<<<<<<< HEAD
 	public static void totalUninjured() throws FileNotFoundException {
 
 		ArrayList<Integer> totalUninjured = new ArrayList<Integer>();
@@ -303,6 +254,5 @@ public class Menu {
 			System.out.println(i);
 		}
 	}
-=======
->>>>>>> branch 'master' of https://github.com/JBanks00/1920-5117COMP-PlaneProgrammers.git
+
 }

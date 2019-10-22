@@ -114,28 +114,44 @@ public class CSVObject {
 		String flightPhases = this.BroadPhaseOfFlight;
 		return flightPhases;
 	}
+
 	public int getTotalFatalInjuries() {
-		String totalFatalInjuries= this.TotalFatalInjuries;
-		return Integer.parseInt(totalFatalInjuries);
-
-
+		String totalFatalInjuries = this.TotalFatalInjuries;
+		int x = 0;
+		if (!totalFatalInjuries.isEmpty()) {
+			Integer.parseInt(totalFatalInjuries);
+		}
+		return x;
 	}
+
 	public int getTotalSeriousInjuries() {
-		String totalSeriousInjuries= this.TotalSeriousInjuries;
-		return Integer.parseInt(totalSeriousInjuries);
-
+		String totalSeriousInjuries = this.TotalSeriousInjuries;
+		int x = 0;
+		if (!totalSeriousInjuries.isEmpty()) {
+			Integer.parseInt(totalSeriousInjuries);
+		}
+		return x;
 
 	}
+
 	public int getTotalMinorInjuries() {
-		String TotalMinorInjuries= this.TotalMinorInjuries;
-		return Integer.parseInt(TotalMinorInjuries);
+		String totalMinorInjuries = this.TotalMinorInjuries;
+		int x = 0;
+		if (!totalMinorInjuries.isEmpty()) {
+			Integer.parseInt(totalMinorInjuries);
+		}
+		return x;
 
 	}
+
 	public int getTotalUninjured() {
-		String TotalUninjured= this.TotalUninjured;
-		return Integer.parseInt(TotalUninjured);
+		String totalUninjured = this.TotalUninjured;
+		int x = 0;
+		if (!totalUninjured.isEmpty()) {
+			Integer.parseInt(totalUninjured);
+		}
+		return x;
 	}
-	
 
 	public String getReports() {
 		String Report = this.ReportStatus;
@@ -150,9 +166,11 @@ public class CSVObject {
 	public String genReport() {
 		String genReport = EventID + "\t " + this.getDate() + "\t "
 				+ StringUtils.rightPad((StringUtils.abbreviate(this.getLocation(), 20)), 25)
-				+ StringUtils.rightPad(this.getReg(), 8) + StringUtils.rightPad(this.TotalFatalInjuries, 14)
-				+ StringUtils.rightPad(this.getTotalSeriousInjuries(), 16) + StringUtils.rightPad(this.getTotalMinorInjuries(), 14) +
-				StringUtils.rightPad(this.getTotalUninjured(), 17) + StringUtils.rightPad(this.getWeather(), 10);
+				+ StringUtils.rightPad(this.getReg(), 8)
+				+ StringUtils.rightPad(this.TotalFatalInjuries, 14)
+				+ StringUtils.rightPad(String.valueOf(this.getTotalSeriousInjuries()), 16)
+				+ StringUtils.rightPad(String.valueOf(this.getTotalMinorInjuries()), 14)
+				+ StringUtils.rightPad(String.valueOf(this.getTotalUninjured()), 17) + StringUtils.rightPad(this.getWeather(), 10);
 		return genReport;
 	}
 
