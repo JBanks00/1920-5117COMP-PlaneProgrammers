@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
+import org.apache.commons.lang3.StringUtils;
+
 import aircraftDataV1.CSV.CSVObject;
 import aircraftDataV1.CSV.Serialisation;
 
@@ -59,7 +61,7 @@ public class Menu {
 				System.out.println("Please specify a phase of flight to return associated reports:");
 				System.out.print("> ");
 
-				String selectionPhase = userInput.nextLine();
+				String selectionPhase = userInput.nextLine().toUpperCase();
 
 				System.out.println("And the year:");
 				System.out.print("> ");
@@ -73,8 +75,10 @@ public class Menu {
 					}
 				}
 
-				System.out.println(
-						"Event ID: \t Event Date: \t Location: \t\t\t\t\t\t Reg: \t\t\t Total Fatal: \t Total Serious:  Total Minor: \t Total Uninjured   Weather:");
+				System.out.println("Event ID:        Event Date:     " + StringUtils.rightPad("Location:", 25)
+						+ StringUtils.rightPad("Reg:", 8) + StringUtils.rightPad("Total Fatal:", 14)
+						+ StringUtils.rightPad("Total Serious:", 16) + StringUtils.rightPad("Total Minor:", 14)
+						+ StringUtils.rightPad("Total Uninjured", 17) + StringUtils.rightPad("Weather:", 10));
 				for (CSVObject obj : reports) {
 					System.out.println(obj.genReport());
 				}

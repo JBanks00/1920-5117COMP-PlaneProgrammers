@@ -1,6 +1,9 @@
 package aircraftDataV1.CSV;
 
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 
 public class CSVObject {
@@ -19,7 +22,7 @@ public class CSVObject {
 		// System.out.println(csv);
 		// System.out.println(splits.get(30));
 
-//		String[] split = csv.split("((?<! ),(?! ))", -1);
+		// String[] split = csv.split("((?<! ),(?! ))", -1);
 
 		EventID = splits.get(0);
 		InvestigationType = splits.get(1);
@@ -143,9 +146,11 @@ public class CSVObject {
 	}
 
 	public String genReport() {
-		String genReport = EventID + "\t " + this.getDate() + "\t " + this.getLocation() + "\t\t\t\t\t\t " + this.getReg()
-				+ "\t\t\t " + this.TotalFatalInjuries + "\t\t " + this.getTotalSeriousInjuries() + "\t\t "
-				+ this.getTotalMinorInjuries() + "\t\t " + this.getTotalUninjured() + "\t\t   " + this.getWeather();
+		String genReport = EventID + "\t " + this.getDate() + "\t "
+				+ StringUtils.rightPad((StringUtils.abbreviate(this.getLocation(), 20)), 25)
+				+ StringUtils.rightPad(this.getReg(), 8) + StringUtils.rightPad(this.TotalFatalInjuries, 14)
+				+ StringUtils.rightPad(this.getTotalSeriousInjuries(), 16) + StringUtils.rightPad(this.getTotalMinorInjuries(), 14) +
+				StringUtils.rightPad(this.getTotalUninjured(), 17) + StringUtils.rightPad(this.getWeather(), 10);
 		return genReport;
 	}
 
