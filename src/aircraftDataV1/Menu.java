@@ -131,12 +131,12 @@ public class Menu {
 		System.out.print("> ");
 
 		String entry = userInput.nextLine().toLowerCase();
-		System.out.printf(entry);
 
 		if (entry.equals("i")) {
 
 			// killed everyone aboard
 			// if serious minor & uninjured is 0 crash is fatal
+			System.out.println("///////////////////////////////////////////// Total fatal:");
 			totalFatal();
 			System.out.println("///////////////////////////////////////////// Total serious:");
 			totalSeriousInjuries();
@@ -145,7 +145,7 @@ public class Menu {
 			System.out.println("///////////////////////////////////////////// Total uninjured:");
 			totalUninjured();
 		}
-		if (entry.equals("ii")) {
+		else if (entry.equals("ii")) {
 			// i) were deadly, but survivors >= perished")
 
 			// select one row of data
@@ -189,7 +189,6 @@ public class Menu {
 		}
 	}
 
-
 	public static void totalFatal() throws FileNotFoundException {
 
 		ArrayList<Integer> totalFatal = new ArrayList<Integer>();
@@ -200,10 +199,7 @@ public class Menu {
 			}
 		}
 		// Collections.sort(phases);
-		for (int i : totalFatal) {
-			System.out.println(i);
-
-		}
+		System.out.println(totalFatal.size());
 	}
 
 	public static void totalSeriousInjuries() throws FileNotFoundException {
@@ -218,10 +214,7 @@ public class Menu {
 			}
 		}
 		// Collections.sort(phases);
-		for (int i : totalSerious) {
-			System.out.println(i);
-
-		}
+		System.out.println(totalSerious.size());
 	}
 
 	public static void totalMinorInjuries() throws FileNotFoundException {
@@ -235,10 +228,7 @@ public class Menu {
 			}
 		}
 		// Collections.sort(phases);
-		for (int i : totalMinor) {
-			System.out.println(i);
-
-		}
+		System.out.println(totalMinor.size());
 	}
 
 	public static void totalUninjured() throws FileNotFoundException {
@@ -250,9 +240,7 @@ public class Menu {
 				totalUninjured.add(ser.getArrayList().get(i).getTotalUninjured());
 			}
 		}
-		for (int i : totalUninjured) {
-			System.out.println(i);
-		}
+		System.out.println(totalUninjured.size());
 	}
 
 }

@@ -119,7 +119,7 @@ public class CSVObject {
 		String totalFatalInjuries = this.TotalFatalInjuries;
 		int x = 0;
 		if (!totalFatalInjuries.isEmpty()) {
-			Integer.parseInt(totalFatalInjuries);
+			x = Integer.parseInt(totalFatalInjuries);
 		}
 		return x;
 	}
@@ -128,7 +128,7 @@ public class CSVObject {
 		String totalSeriousInjuries = this.TotalSeriousInjuries;
 		int x = 0;
 		if (!totalSeriousInjuries.isEmpty()) {
-			Integer.parseInt(totalSeriousInjuries);
+			x = Integer.parseInt(totalSeriousInjuries);
 		}
 		return x;
 
@@ -138,7 +138,7 @@ public class CSVObject {
 		String totalMinorInjuries = this.TotalMinorInjuries;
 		int x = 0;
 		if (!totalMinorInjuries.isEmpty()) {
-			Integer.parseInt(totalMinorInjuries);
+			x= Integer.parseInt(totalMinorInjuries);
 		}
 		return x;
 
@@ -148,7 +148,7 @@ public class CSVObject {
 		String totalUninjured = this.TotalUninjured;
 		int x = 0;
 		if (!totalUninjured.isEmpty()) {
-			Integer.parseInt(totalUninjured);
+			x = Integer.parseInt(totalUninjured);
 		}
 		return x;
 	}
