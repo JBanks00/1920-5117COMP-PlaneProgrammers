@@ -100,18 +100,23 @@ public class CSVObject {
 		String flightPhases = this.BroadPhaseOfFlight;
 		return flightPhases;
 	}
-	public String getTotalFatalInjuries() {
+	public int getTotalFatalInjuries() {
 		String totalFatalInjuries= this.TotalFatalInjuries;
-		return totalFatalInjuries;
+		return Integer.parseInt(totalFatalInjuries);
 	}
-	public String getTotalSeriousInjuries() {
+	public int getTotalSeriousInjuries() {
 		String totalSeriousInjuries= this.TotalSeriousInjuries;
-		return totalSeriousInjuries;
+		return Integer.parseInt(totalSeriousInjuries);
 	}
-	public String getTotalMinorInjuries() {
+	public int getTotalMinorInjuries() {
 		String TotalMinorInjuries= this.TotalMinorInjuries;
-		return TotalMinorInjuries;
+		return Integer.parseInt(TotalMinorInjuries);
 	}
+	public int getTotalUninjured() {
+		String TotalUninjured= this.TotalUninjured;
+		return Integer.parseInt(TotalUninjured);
+	}
+	
 	public String getReports() {
 		String Report = this.ReportStatus;
 		return Report;
