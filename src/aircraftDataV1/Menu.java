@@ -74,6 +74,10 @@ public class Menu {
 						reports.add(ser.getArrayList().get(i));
 					}
 				}
+				if (reports.size() == 0) {
+					System.out.println("No Matching Data");
+					break;
+				}
 
 				System.out.println("Event ID:        Event Date:     " + StringUtils.rightPad("Location:", 25)
 						+ StringUtils.rightPad("Reg:", 8) + StringUtils.rightPad("Total Fatal:", 14)
