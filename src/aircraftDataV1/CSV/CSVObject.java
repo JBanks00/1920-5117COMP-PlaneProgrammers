@@ -1,6 +1,9 @@
 package aircraftDataV1.CSV;
 
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 
 public class CSVObject {
@@ -16,11 +19,11 @@ public class CSVObject {
 
 	public CSVObject(String csv) {
 		List<String> splits = splitCSV(csv);
-		//System.out.println(csv);
-		//System.out.println(splits.get(30));
-		
-//		String[] split = csv.split("((?<! ),(?! ))", -1);
-		
+		// System.out.println(csv);
+		// System.out.println(splits.get(30));
+
+		// String[] split = csv.split("((?<! ),(?! ))", -1);
+
 		EventID = splits.get(0);
 		InvestigationType = splits.get(1);
 		AccidentNumber = splits.get(2);
@@ -86,9 +89,20 @@ public class CSVObject {
 	public String getMake() {
 		return this.Make;
 	}
+
+	public String getReg() {
+		String Reg = this.RegistrationNumber;
+		return Reg;
+	}
+
 	public String getDate() {
 		String dateString = this.EventDate;
 		return dateString;
+	}
+
+	public String getLocation() {
+		String Location = this.Location;
+		return Location;
 	}
 
 	public String getYear() {
@@ -103,30 +117,43 @@ public class CSVObject {
 	public int getTotalFatalInjuries() {
 		String totalFatalInjuries= this.TotalFatalInjuries;
 		return Integer.parseInt(totalFatalInjuries);
+
+
 	}
 	public int getTotalSeriousInjuries() {
 		String totalSeriousInjuries= this.TotalSeriousInjuries;
 		return Integer.parseInt(totalSeriousInjuries);
+
+
 	}
 	public int getTotalMinorInjuries() {
 		String TotalMinorInjuries= this.TotalMinorInjuries;
 		return Integer.parseInt(TotalMinorInjuries);
+
 	}
 	public int getTotalUninjured() {
 		String TotalUninjured= this.TotalUninjured;
 		return Integer.parseInt(TotalUninjured);
 	}
 	
+
 	public String getReports() {
 		String Report = this.ReportStatus;
 		return Report;
 	}
+
+	public String getWeather() {
+		String Weather = this.WeatherCondition;
+		return Weather;
+	}
+
 	public String genReport() {
-		String genReport = EventID + "\t " + this.getDate() + "\t "; 
+		String genReport = EventID + "\t " + this.getDate() + "\t "
+				+ StringUtils.rightPad((StringUtils.abbreviate(this.getLocation(), 20)), 25)
+				+ StringUtils.rightPad(this.getReg(), 8) + StringUtils.rightPad(this.TotalFatalInjuries, 14)
+				+ StringUtils.rightPad(this.getTotalSeriousInjuries(), 16) + StringUtils.rightPad(this.getTotalMinorInjuries(), 14) +
+				StringUtils.rightPad(this.getTotalUninjured(), 17) + StringUtils.rightPad(this.getWeather(), 10);
 		return genReport;
 	}
-	
-	
-	
-	
+
 }
