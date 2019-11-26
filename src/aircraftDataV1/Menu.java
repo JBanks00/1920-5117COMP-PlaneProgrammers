@@ -96,6 +96,9 @@ public class Menu {
 			case "5":
 				regSearch();
 				break;
+			case "6":
+				accidentRate();
+				break;
 			case "X":
 				System.out.println(ser.getArrayList().get(1).getString());
 				break;
@@ -107,6 +110,7 @@ public class Menu {
 			}
 		}
 	}
+	
 
 	public static String menuChoice() {
 
@@ -117,6 +121,7 @@ public class Menu {
 		System.out.println("3. Phases of flight reports");
 		System.out.println("4. Accident Summary");
 		System.out.println("5. Plane Registration Seach");
+		System.out.println("6. Calcualte Accident Rate (10 year)");
 		System.out.println("X. TEST OPTION");
 		System.out.println("Q. Quit");
 		System.out.print("> ");
@@ -127,10 +132,10 @@ public class Menu {
 
 	public static void regSearch() throws FileNotFoundException {
 		ArrayList<CSVObject> planes = new ArrayList<CSVObject>();
-		
+
 		System.out.println("Please enter the desired plane Registration:");
 		System.out.print("> ");
-		
+
 		String planeSearch = userInput.next();
 
 		for (int i = 0; i < ser.getArrayList().size(); i++) {
@@ -139,22 +144,41 @@ public class Menu {
 			}
 		}
 		System.out.println("Event ID:        Event Date:     " + StringUtils.rightPad("Location:", 25)
-		+ StringUtils.rightPad("Reg:", 8) + StringUtils.rightPad("Total Fatal:", 14)
-		+ StringUtils.rightPad("Total Serious:", 16) + StringUtils.rightPad("Total Minor:", 14)
-		+ StringUtils.rightPad("Total Uninjured", 17) + StringUtils.rightPad("Weather:", 10));
-		
+				+ StringUtils.rightPad("Reg:", 8) + StringUtils.rightPad("Total Fatal:", 14)
+				+ StringUtils.rightPad("Total Serious:", 16) + StringUtils.rightPad("Total Minor:", 14)
+				+ StringUtils.rightPad("Total Uninjured", 17) + StringUtils.rightPad("Weather:", 10));
+
 		for (CSVObject obj : planes) {
 			System.out.println(obj.regInfo());
 		}
 	}
 
+	public static void accidentRate() {
+		System.out.println("Enter option to view:");
+		System.out.println("i) Accident rate for 10 year period.");
+		System.out.println("ii) Fatality count for 10 year period");
+		System.out.print("> ");
+
+		switch (userInput.nextLine().toLowerCase()) {
+		case "i":
+			System.out.println();
+			break;
+		case "ii":
+
+			break;
+		default:
+			break;
+		}
+
+	}
+
 	public static void accidentSummary() throws FileNotFoundException {
 
 		System.out.println("Enter option to view:");
-		System.out.println("i) killed everyone aboard");
-		System.out.println("ii) were deadly, but survivors >= perished");
-		System.out.println("iii) were not deadly, but resulted in serious or minor injuries");
-		System.out.println("iv) resulted in no fatalities or injuries");
+		System.out.println("i) Killed everyone aboard.");
+		System.out.println("ii) Were deadly, but survivors >= perished.");
+		System.out.println("iii) Were not deadly, but resulted in serious or minor injuries.");
+		System.out.println("iv) Resulted in no fatalities or injuries.");
 		System.out.print("> ");
 
 		String entry = userInput.nextLine().toLowerCase();
@@ -190,7 +214,7 @@ public class Menu {
 
 				}
 			}
-			
+
 			for (CSVObject object : objects) {
 				System.out.println(object.getReports());
 			}
