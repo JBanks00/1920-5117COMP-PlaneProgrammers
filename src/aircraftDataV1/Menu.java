@@ -110,7 +110,6 @@ public class Menu {
 			}
 		}
 	}
-	
 
 	public static String menuChoice() {
 
@@ -153,6 +152,24 @@ public class Menu {
 		}
 	}
 
+	public static String dateInput;
+	private static boolean inputDate() {
+		dateInput = userInput.nextLine().toLowerCase();
+		if (dateInput.length() == 4) {
+			try {
+				Integer.parseInt(dateInput);
+				return false;
+			} catch (Exception e) {
+				System.out.println("Invalid entry");
+				return true;
+			}
+		} else {
+			System.out.println("Invalid entry");
+			return true;
+		}
+
+	}
+
 	public static void accidentRate() {
 		System.out.println("Enter option to view:");
 		System.out.println("i) Accident rate for 10 year period.");
@@ -161,9 +178,45 @@ public class Menu {
 
 		switch (userInput.nextLine().toLowerCase()) {
 		case "i":
+			do {
+				System.out.println("Enter the start year:");
+				System.out.print("> ");
+
+			} while (inputDate());
+
+			ArrayList<CSVObject> accidents = new ArrayList<CSVObject>();
+			for (int i = 0; i <= 10; i++) {
+				for (int j = 0; j < ser.getArrayList().size(); j++) {
+					if(ser.getArrayList().get(j).getYear().equals(Integer.toString(Integer.parseInt(dateInput)+i))) {
+						accidents.add(ser.getArrayList().get(j));
+						
+					}
+				}
+			}
+			
+			System.out.println("Accidents " + accidents.size());
+			
+
 			System.out.println();
 			break;
 		case "ii":
+			do {
+				System.out.println("Enter the start year:");
+				System.out.print("> ");
+
+			} while (inputDate());
+
+			int fatalities = 0;
+			for (int i = 0; i <= 10; i++) {
+				for (int j = 0; j < ser.getArrayList().size(); j++) {
+					if(ser.getArrayList().get(j).getYear().equals(Integer.toString(Integer.parseInt(dateInput)+i))) {
+						fatalities += ser.getArrayList().get(j).getTotalFatalInjuries();
+					}
+				}
+			}
+			
+			System.out.println("Fatalities " + fatalities);
+			
 
 			break;
 		default:
