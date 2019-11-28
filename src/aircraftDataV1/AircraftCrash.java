@@ -1,7 +1,7 @@
 package aircraftDataV1;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import aircraftDataV1.CSV.Serialisation;
 
@@ -9,7 +9,7 @@ public class AircraftCrash {
 	
 	private static Serialisation ser;
 	
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		
 		System.out.println("Programme Starting....");
 		

@@ -1,6 +1,5 @@
 package aircraftDataV1;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -308,13 +307,12 @@ public class Menu {
 
 	public static void totalSeriousInjuries() throws FileNotFoundException {
 
-		Serialisation ser3 = new Serialisation(new File("src/aircraftDataV1/Data/aviationdata.csv"));
 
 		ArrayList<Integer> totalSerious = new ArrayList<Integer>();
 
 		for (int i = 0; i < ser.getArrayList().size(); i++) {
 			if (!(totalSerious.contains(ser.getArrayList().get(i).getTotalSeriousInjuries()))) {
-				totalSerious.add(ser3.getArrayList().get(i).getTotalSeriousInjuries());
+				totalSerious.add(ser.getArrayList().get(i).getTotalSeriousInjuries());
 			}
 		}
 		// Collections.sort(phases);
