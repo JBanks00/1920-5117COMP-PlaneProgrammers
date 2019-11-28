@@ -237,15 +237,16 @@ public class Menu {
 		if (entry.equals("i")) {
 			System.out.println("I: Everyone onboard killed");
 			totalFatal();
-
+			
 		} else if (entry.equals("ii")) {
 			System.out.println("II: Deadly, but survivors >= perished");
 			totalDeadly();
-
-		} else if (entry.equals("iii")) {
+			
+		}
+		else if (entry.equals("iii")) {
 			System.out.println("OPTION III: Not deadly, but resulted in serious or minor injuries");
 			totalNotDeadly();
-
+			
 		} else if (entry.equals("iv")) {
 			System.out.println("OPTION IV: No fatalities");
 			totalNoFatalities();
@@ -262,11 +263,11 @@ public class Menu {
 
 		for (int i = 0; i < ser.getArrayList().size(); i++) {
 			if (ser.getArrayList().get(i).getTotalFatalInjuries() > 0) {
-
+		
 				if (ser.getArrayList().get(i).getTotalMinorInjuries() == 0) {
-
+		
 					if (ser.getArrayList().get(i).getTotalSeriousInjuries() == 0) {
-
+			
 						if (ser.getArrayList().get(i).getTotalUninjured() == 0) {
 							totalFatal.add(ser.getArrayList().get(i));
 						}
@@ -281,70 +282,72 @@ public class Menu {
 		System.out.println(totalFatal.size());
 	}
 
-	public static void totalDeadly() throws FileNotFoundException {
-
-		// Deadly, but survivors >= perished
+	public static void totalDeadly() throws FileNotFoundException{
+	
+//Deadly, but survivors >= perished
 		ArrayList<CSVObject> totalDeadly = new ArrayList<CSVObject>();
 
 		for (int i = 0; i < ser.getArrayList().size(); i++) {
-			// if(ser.getArrayList().get(i).getTotalFatalInjuries()>0) {
-			int fatal = ser.getArrayList().get(i).getTotalFatalInjuries();
-
-			int x = (ser.getArrayList().get(i).getTotalUninjured()) + ser.getArrayList().get(i).getTotalMinorInjuries()
+			//if(ser.getArrayList().get(i).getTotalFatalInjuries()>0) {
+			int fatal= ser.getArrayList().get(i).getTotalFatalInjuries();
+				
+			int x = (ser.getArrayList().get(i).getTotalUninjured())
+					+ ser.getArrayList().get(i).getTotalMinorInjuries()
 					+ ser.getArrayList().get(i).getTotalSeriousInjuries();
+			
+				if(x!=0) {
+					if(fatal!=0) {
+						if(x>fatal) {
 
-			if (x != 0) {
-				if (fatal != 0) {
-					if (x > fatal) {
-
-						totalDeadly.add(ser.getArrayList().get(i));
+							totalDeadly.add(ser.getArrayList().get(i));
+						}
 					}
-				}
 			}
-		}
-
+			}
+	
 		for (CSVObject csvObject : totalDeadly) {
 			System.out.println(csvObject.Location);
 		}
 		System.out.println(totalDeadly.size());
 	}
 
-	public static void totalNoFatalities() throws FileNotFoundException {
+		
 
-		ArrayList<CSVObject> totalNoFatalities = new ArrayList<CSVObject>();
+	public static void totalNoFatalities() throws FileNotFoundException{
+	
+	ArrayList<CSVObject> totalNoFatalities = new ArrayList<CSVObject>();
 
-		for (int i = 0; i < ser.getArrayList().size(); i++) {
-			if (ser.getArrayList().get(i).getTotalFatalInjuries() == 0) {
-
-				if (ser.getArrayList().get(i).getTotalMinorInjuries() == 0) {
-
-					if (ser.getArrayList().get(i).getTotalSeriousInjuries() == 0) {
-
-						if (ser.getArrayList().get(i).getTotalUninjured() > 0) {
-							totalNoFatalities.add(ser.getArrayList().get(i));
-						}
+	for (int i = 0; i < ser.getArrayList().size(); i++) {
+		if (ser.getArrayList().get(i).getTotalFatalInjuries() == 0) {
+	
+			if (ser.getArrayList().get(i).getTotalMinorInjuries() == 0) {
+	
+				if (ser.getArrayList().get(i).getTotalSeriousInjuries() == 0) {
+		
+					if (ser.getArrayList().get(i).getTotalUninjured() > 0) {
+						totalNoFatalities.add(ser.getArrayList().get(i));
 					}
 				}
 			}
 		}
-
-		for (CSVObject csvObject : totalNoFatalities) {
-			System.out.println(csvObject.Location);
-		}
-		System.out.println(totalNoFatalities.size());
 	}
 
-	public static void totalNotDeadly() throws FileNotFoundException {
-
+	for (CSVObject csvObject : totalNoFatalities) {
+		System.out.println(csvObject.Location);
+	}
+	System.out.println(totalNoFatalities.size());
+}
+	public static void totalNotDeadly() throws FileNotFoundException{
+		
 		ArrayList<CSVObject> totalNotDeadly = new ArrayList<CSVObject>();
 
 		for (int i = 0; i < ser.getArrayList().size(); i++) {
 			if (ser.getArrayList().get(i).getTotalFatalInjuries() == 0) {
-
+		
 				if (ser.getArrayList().get(i).getTotalMinorInjuries() >= 0) {
-
+		
 					if (ser.getArrayList().get(i).getTotalSeriousInjuries() >= 0) {
-
+			
 						if (ser.getArrayList().get(i).getTotalUninjured() >= 0) {
 							totalNotDeadly.add(ser.getArrayList().get(i));
 						}
@@ -358,5 +361,6 @@ public class Menu {
 		}
 		System.out.println(totalNotDeadly.size());
 	}
+
 
 }
