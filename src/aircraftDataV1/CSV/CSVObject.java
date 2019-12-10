@@ -89,7 +89,10 @@ public class CSVObject {
 	public String getMake() {
 		return this.Make;
 	}
-
+	
+	public String getModel() {
+		return this.Model;
+	}
 	public String getReg() {
 		String Reg = this.RegistrationNumber;
 		return Reg;
@@ -186,5 +189,7 @@ public class CSVObject {
 				+ StringUtils.rightPad(String.valueOf(this.getTotalUninjured()), 17) + StringUtils.rightPad(this.getWeather(), 10);
 		return genReport;
 	}
+
+	
 
 }
