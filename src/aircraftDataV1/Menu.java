@@ -99,9 +99,7 @@ public class Menu {
 			case "6":
 				accidentRate();
 				break;
-			case "X":
-				System.out.println(ser.getArrayList().get(1).getString());
-				break;
+
 			case "Q":
 				menuLoop = false;
 				break;
@@ -121,7 +119,6 @@ public class Menu {
 		System.out.println("4. Accident Summary");
 		System.out.println("5. Plane Registration Seach");
 		System.out.println("6. Calcualte Accident Rate (10 year)");
-		System.out.println("X. TEST OPTION");
 		System.out.println("Q. Quit");
 		System.out.print("> ");
 		String choice = userInput.nextLine();
@@ -135,8 +132,7 @@ public class Menu {
 		System.out.println("Please enter the desired plane Registration:");
 		System.out.print("> ");
 
-		String planeSearch = userInput.next();
-
+		String planeSearch = userInput.nextLine();
 		for (int i = 0; i < ser.getArrayList().size(); i++) {
 			if (ser.getArrayList().get(i).getReg().equals(planeSearch)) {
 				planes.add(ser.getArrayList().get(i));
@@ -404,7 +400,8 @@ public class Menu {
 			String input = userInput.nextLine().toLowerCase();
 			if (input.equals("yes")) {
 				for (CSVObject csvObject : totalFatal) {
-					System.out.println(csvObject.AccidentNumber + " " + csvObject.Location);
+					System.out.println(csvObject.getReg() + " " + csvObject.getLocation() + " "
+							+ csvObject.getTotalFatalInjuries());
 				}
 			}
 		}
@@ -450,7 +447,7 @@ public class Menu {
 				}
 
 				for (CSVObject csvObject : fatalAccidentRate) {
-					System.out.println(csvObject.AccidentNumber + " " + csvObject.Location);
+					System.out.println(csvObject.getReg() + " " + csvObject.getLocation());
 				}
 				System.out.println("Accidents " + fatalAccidentRate.size());
 				System.out.println();
@@ -592,7 +589,7 @@ public class Menu {
 		String input = userInput.nextLine().toLowerCase();
 		if (input.equals("yes")) {
 			for (CSVObject csvObject : totalNoFatalities) {
-				System.out.println(csvObject.AccidentNumber + " " + csvObject.Location);
+				System.out.println(csvObject.getReg() + " " + csvObject.Location);
 			}
 		}
 	}
@@ -621,7 +618,7 @@ public class Menu {
 		String input = userInput.nextLine().toLowerCase();
 		if (input.equals("yes")) {
 			for (CSVObject csvObject : totalNotDeadly) {
-				System.out.println(csvObject.AccidentNumber + " " + csvObject.Location);
+				System.out.println(csvObject.getReg() + " " + csvObject.Location);
 			}
 		}
 
