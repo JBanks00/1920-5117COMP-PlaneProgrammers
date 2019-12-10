@@ -265,7 +265,7 @@ public class Menu {
 				String key = s;
 				int value = Integer.parseInt(frequencymap2.get(s).toString());
 				if (value == val2) {
-					System.out.println(key + " with " +  val2 + " fatalities");
+					System.out.println(key + " with " + val2 + " fatalities");
 				}
 			}
 
@@ -398,10 +398,15 @@ public class Menu {
 					}
 				}
 			}
-			for (CSVObject csvObject : totalFatal) {
-				System.out.println(csvObject.AccidentNumber + " " + csvObject.Location);
-			}
+
 			System.out.println("Total results for fatal accidents : " + totalFatal.size());
+			System.out.println("Would you like to list the accidents Yes/No");
+			String input = userInput.nextLine().toLowerCase();
+			if (input.equals("yes")) {
+				for (CSVObject csvObject : totalFatal) {
+					System.out.println(csvObject.AccidentNumber + " " + csvObject.Location);
+				}
+			}
 		}
 
 		else if (userChoice.equalsIgnoreCase("yes")) {
@@ -467,7 +472,7 @@ public class Menu {
 				// if(ser.getArrayList().get(i).getTotalFatalInjuries()>0) {
 				int fatal = ser.getArrayList().get(i).getTotalFatalInjuries();
 
-				int x = (ser.getArrayList().get(i).getTotalUninjured())
+				int x = ser.getArrayList().get(i).getTotalUninjured()
 						+ ser.getArrayList().get(i).getTotalMinorInjuries()
 						+ ser.getArrayList().get(i).getTotalSeriousInjuries();
 
@@ -481,10 +486,15 @@ public class Menu {
 
 				}
 			}
-			for (CSVObject csvObject : totalDeadly) {
-				System.out.println(csvObject.AccidentNumber + " " + csvObject.Location);
+
+			System.out.println("Total results for fatal accidents where survivors >= perished : " + totalDeadly.size());
+			System.out.println("Would you like to list the accidents Yes/No");
+			String input = userInput.nextLine().toLowerCase();
+			if (input.equals("yes")) {
+				for (CSVObject csvObject : totalDeadly) {
+					System.out.println(csvObject.AccidentNumber + " " + csvObject.Location);
+				}
 			}
-			System.out.println("Total results for fatal accidents : " + totalDeadly.size());
 
 		} else if (userChoice.equalsIgnoreCase("yes")) {
 
@@ -577,10 +587,14 @@ public class Menu {
 			}
 		}
 
-		for (CSVObject csvObject : totalNoFatalities) {
-			System.out.println(csvObject.Location);
-		}
 		System.out.println("Total results for accidents with no fatalities: " + totalNoFatalities.size());
+		System.out.println("\nWould you like to list the accidents Yes/No");
+		String input = userInput.nextLine().toLowerCase();
+		if (input.equals("yes")) {
+			for (CSVObject csvObject : totalNoFatalities) {
+				System.out.println(csvObject.AccidentNumber + " " + csvObject.Location);
+			}
+		}
 	}
 
 	public static void totalNotDeadly() throws FileNotFoundException {
@@ -601,11 +615,16 @@ public class Menu {
 				}
 			}
 		}
-
-		for (CSVObject csvObject : totalNotDeadly) {
-			System.out.println(csvObject.Location);
+		System.out
+				.println("\nTotal results for fewer fatalities than injuries in an accident: " + totalNotDeadly.size());
+		System.out.println("\nWould you like to list the accidents Yes/No");
+		String input = userInput.nextLine().toLowerCase();
+		if (input.equals("yes")) {
+			for (CSVObject csvObject : totalNotDeadly) {
+				System.out.println(csvObject.AccidentNumber + " " + csvObject.Location);
+			}
 		}
-		System.out.println("Total results for fewer fatalities than injuries in an accident: " + totalNotDeadly.size());
+
 	}
 
 }
