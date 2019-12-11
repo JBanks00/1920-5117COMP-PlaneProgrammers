@@ -6,10 +6,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import javax.tools.OptionChecker;
+
 import org.apache.commons.lang3.StringUtils;
 
 import aircraftDataV1.CSV.CSVObject;
 import aircraftDataV1.CSV.Serialisation;
+import jdk.nashorn.internal.objects.annotations.Where;
 
 public class Menu {
 
@@ -273,70 +276,6 @@ public class Menu {
 
 	}
 
-	public static void TaskE() {
-		System.out.println("Enter option to view:");
-		System.out.println("i) Accident rate for 10 year period.");
-		System.out.println("ii) Phase of Flight");
-		System.out.println("iii) Aircraft Make and Type");
-		System.out.print("> ");
-		String optionChoice = userInput.nextLine().toLowerCase();
-
-		switch (optionChoice) {
-		case "i":
-			do {
-				System.out.println("Enter the start year:");
-				System.out.print("> ");
-			} while (inputDate());
-
-			// System.out.println(dateInput);
-			ArrayList<CSVObject> accidents = new ArrayList<CSVObject>();
-			int date = Integer.parseInt(dateInput);
-			System.out.println("Years chosen to view data:");
-
-			ArrayList<CSVObject> totalFatal = new ArrayList<CSVObject>();
-			for (int e = 0; e <= 10; e++) {
-				for (int i = 0; i < ser.getArrayList().size(); i++) {
-					if (ser.getArrayList().get(i).getTotalFatalInjuries() > 0) {
-
-						if (ser.getArrayList().get(i).getTotalMinorInjuries() == 0) {
-
-							if (ser.getArrayList().get(i).getTotalSeriousInjuries() == 0) {
-
-								if (ser.getArrayList().get(i).getTotalUninjured() == 0) {
-									// IF DATE IS ON LIST, OUTPUT
-									if (ser.getArrayList().get(i).getYear()
-											.equals(Integer.toString(Integer.parseInt(dateInput) + e)))
-
-										totalFatal.add(ser.getArrayList().get(i));
-								}
-							}
-						}
-					}
-				}
-
-				for (CSVObject csvObject : totalFatal) {
-					System.out.println(csvObject.Location);
-				}
-
-				System.out.println("Accidents " + totalFatal.size());
-
-				System.out.println();
-			}
-			break;
-
-		/*
-		 * case "ii": do
-		 * {System.out.println("Enter the start year:");System.out.print("> "); } while
-		 * (inputDate()); int fatalities = 0;for (int i = 0; i <= 10; i++) { for (int j
-		 * = 0; j < ser.getArrayList().size(); j++) { if
-		 * (ser.getArrayList().get(j).getYear().equals(Integer.toString(Integer.parseInt
-		 * (dateInput) + i))) { fatalities +=
-		 * ser.getArrayList().get(j).getTotalFatalInjuries();} }}
-		 * System.out.println("Fatalities " + fatalities); break;default:break;
-		 */
-		}
-	}
-
 	public static void accidentSummary() throws FileNotFoundException {
 
 		System.out.println("Enter option to view:");
@@ -362,7 +301,7 @@ public class Menu {
 
 		} else if (entry.equals("iv")) {
 			System.out.println("OPTION IV: No fatalities");
-			totalNoFatalities();
+			totalNoInjuries();
 		}
 
 		else {
@@ -378,7 +317,125 @@ public class Menu {
 		System.out.println(">");
 		String userChoice = userInput.nextLine().toLowerCase();
 
-		if (userChoice.equalsIgnoreCase("no")) { // run normal
+		if (userChoice.equalsIgnoreCase("yes")) {
+
+			System.out.println("\nCHOSEN TO FILTER DATA");
+
+			System.out.println("Enter option to view:");
+			System.out.println("i) Accident rate for 10 year period.");
+			System.out.println("ii) Phase of Flight");
+			System.out.println("iii) Aircraft Make and Type");
+			System.out.print("> ");
+			String optionChoice = userInput.nextLine().toLowerCase();
+
+			ArrayList<CSVObject> fatalAccidentRate = new ArrayList<CSVObject>();
+
+			switch (optionChoice) {
+			case "i":
+				do {
+					System.out.println("Enter the start year:");
+					System.out.print("> ");
+				} while (inputDate());
+
+				for (int e = 0; e <= 10; e++) {
+
+					for (int i = 0; i < ser.getArrayList().size(); i++) {
+						if (ser.getArrayList().get(i).getTotalFatalInjuries() > 0) {
+
+							if (ser.getArrayList().get(i).getTotalMinorInjuries() == 0) {
+
+								if (ser.getArrayList().get(i).getTotalSeriousInjuries() == 0) {
+
+									if (ser.getArrayList().get(i).getTotalUninjured() == 0) {
+										if (ser.getArrayList().get(i).getYear()
+												.equals(Integer.toString(Integer.parseInt(dateInput) + e)))
+											fatalAccidentRate.add(ser.getArrayList().get(i));
+									}
+								}
+							}
+						}
+					}
+				}
+
+				for (CSVObject csvObject : fatalAccidentRate) {
+					System.out.println(csvObject.getReg() + " " + csvObject.getLocation());
+				}
+				System.out.println("Accidents =" + fatalAccidentRate.size());
+				System.out.println();
+				break;
+
+			case "ii": {
+
+				System.out.println("Enter phase of flight to filter by: ");
+				System.out.print("> ");
+
+				String phaseChoice = userInput.nextLine().toUpperCase();
+
+				for (int i = 0; i < ser.getArrayList().size(); i++) {
+					if (ser.getArrayList().get(i).getTotalFatalInjuries() > 0) {
+
+						if (ser.getArrayList().get(i).getTotalMinorInjuries() == 0) {
+
+							if (ser.getArrayList().get(i).getTotalSeriousInjuries() == 0) {
+
+								if (ser.getArrayList().get(i).getTotalUninjured() == 0) {
+
+									if (ser.getArrayList().get(i).getPhases().equals(phaseChoice)) {
+
+										fatalAccidentRate.add(ser.getArrayList().get(i));
+									}
+								}
+							}
+						}
+					}
+				}
+
+				System.out.println("\nAccidents for phase " + phaseChoice + " = " + fatalAccidentRate.size());
+				System.out.println();
+
+			}
+				System.out.println("\nWould you like to list the accidents Yes/No");
+
+				String listChoice = userInput.nextLine().toLowerCase();
+				if (listChoice.equals("yes")) {
+					for (CSVObject csvObject : fatalAccidentRate) {
+						System.out.println(csvObject.getReg() + " " + csvObject.Location);
+					}
+
+				} else {
+				}
+
+				break;
+
+			case "iii":
+				System.out.println("Filter by Aircraft make and type:");
+
+				for (int i = 0; i < ser.getArrayList().size(); i++) {
+					if (ser.getArrayList().get(i).getTotalFatalInjuries() > 0) {
+
+						if (ser.getArrayList().get(i).getTotalMinorInjuries() == 0) {
+
+							if (ser.getArrayList().get(i).getTotalSeriousInjuries() == 0) {
+
+								if (ser.getArrayList().get(i).getTotalUninjured() == 0) {
+									fatalAccidentRate.add(ser.getArrayList().get(i));
+								}
+							}
+						}
+					}
+				}
+
+				for (int x = 0; x < fatalAccidentRate.size(); x++) {
+					System.out.println(StringUtils.rightPad("Make: " + fatalAccidentRate.get(x).getMake(), 20)
+							+ StringUtils.rightPad("  Model: " + fatalAccidentRate.get(x).getModel(), 10));
+				}
+				System.out.println("Total Accidents = " + fatalAccidentRate.size());
+
+				break;
+			}
+		}
+
+		else { // run as normal
 
 			for (int i = 0; i < ser.getArrayList().size(); i++) {
 				if (ser.getArrayList().get(i).getTotalFatalInjuries() > 0) {
@@ -396,17 +453,27 @@ public class Menu {
 			}
 
 			System.out.println("Total results for fatal accidents : " + totalFatal.size());
-			System.out.println("Would you like to list the accidents Yes/No");
+			System.out.println("\nWould you like to list the accidents Yes/No");
 			String input = userInput.nextLine().toLowerCase();
 			if (input.equals("yes")) {
 				for (CSVObject csvObject : totalFatal) {
 					System.out.println(csvObject.getReg() + " " + csvObject.getLocation() + " "
 							+ csvObject.getTotalFatalInjuries());
 				}
+			} else {
 			}
 		}
+	}
 
-		else if (userChoice.equalsIgnoreCase("yes")) {
+	public static void totalDeadly() throws FileNotFoundException { 
+
+		ArrayList<CSVObject> totalDeadly = new ArrayList<CSVObject>();
+
+		System.out.println("\nWould you like to filter these results? Yes/No");
+		System.out.println(">");
+		String userChoice = userInput.nextLine().toLowerCase();
+
+		if (userChoice.equalsIgnoreCase("yes")) {
 
 			System.out.println("\nCHOSEN TO FILTER DATA");
 
@@ -418,55 +485,116 @@ public class Menu {
 			String optionChoice = userInput.nextLine().toLowerCase();
 
 			switch (optionChoice) {
-			case "i":
+			case "i": // filter 10 years
 				do {
 					System.out.println("Enter the start year:");
 					System.out.print("> ");
 				} while (inputDate());
 
-				ArrayList<CSVObject> fatalAccidentRate = new ArrayList<CSVObject>();
-				for (int e = 0; e <= 10; e++) {
+				for (int i = 0; i < ser.getArrayList().size(); i++) {
+					int fatal = ser.getArrayList().get(i).getTotalFatalInjuries();
 
-					for (int i = 0; i < ser.getArrayList().size(); i++) {
-						if (ser.getArrayList().get(i).getTotalFatalInjuries() > 0) {
+					int x = (ser.getArrayList().get(i).getTotalUninjured())
+							+ ser.getArrayList().get(i).getTotalMinorInjuries()
+							+ ser.getArrayList().get(i).getTotalSeriousInjuries();
 
-							if (ser.getArrayList().get(i).getTotalMinorInjuries() == 0) {
+					if (x != 0) {
+						if (fatal != 0) {
+							if (x > fatal) {
 
-								if (ser.getArrayList().get(i).getTotalSeriousInjuries() == 0) {
+								if (ser.getArrayList().get(i).getYear()
+										.equals(Integer.toString(Integer.parseInt(dateInput))))
+									totalDeadly.add(ser.getArrayList().get(i));
 
-									if (ser.getArrayList().get(i).getTotalUninjured() == 0) {
-										// IF DATE IS ON LIST, OUTPUT
-										if (ser.getArrayList().get(i).getYear()
-												.equals(Integer.toString(Integer.parseInt(dateInput) + e)))
-											fatalAccidentRate.add(ser.getArrayList().get(i));
-									}
+							}
+						}
+					}
+				}
+
+				for (CSVObject csvObject : totalDeadly) {
+					System.out.println(csvObject.getReg() + " " + csvObject.getLocation());
+				}
+				System.out.println("Total results for deadly accidents : " + totalDeadly.size());
+
+				break;
+
+			case "ii":// phase of flight
+
+				System.out.println("Enter phase of flight to filter by: ");
+				System.out.print("> ");
+
+				String phaseChoice = userInput.nextLine().toUpperCase();
+
+				for (int i = 0; i < ser.getArrayList().size(); i++) {
+
+					int fatal = ser.getArrayList().get(i).getTotalFatalInjuries();
+
+					int x = (ser.getArrayList().get(i).getTotalUninjured())
+							+ ser.getArrayList().get(i).getTotalMinorInjuries()
+							+ ser.getArrayList().get(i).getTotalSeriousInjuries();
+
+					if (x != 0) {
+						if (fatal != 0) {
+							if (x > fatal) {
+								if (ser.getArrayList().get(i).getPhases().equals(phaseChoice)) {
+
+									totalDeadly.add(ser.getArrayList().get(i));
 								}
 							}
 						}
 					}
 				}
 
-				for (CSVObject csvObject : fatalAccidentRate) {
-					System.out.println(csvObject.getReg() + " " + csvObject.getLocation());
+				System.out.println("\nTotal results for accidents with no fatalities in phase: " + phaseChoice + " = "
+						+ totalDeadly.size());
+				System.out.println("\nWould you like to list the accidents Yes/No");
+
+				String listChoice = userInput.nextLine().toLowerCase();
+				if (listChoice.equals("yes")) {
+					for (CSVObject csvObject : totalDeadly) {
+						System.out.println(csvObject.getReg() + " " + csvObject.Location);
+					}
+
 				}
-				System.out.println("Accidents " + fatalAccidentRate.size());
-				System.out.println();
+
+				break;
+
+			case "iii": // by aircraft make and type
+
+				System.out.println("Filter by Aircraft make and type:");
+
+				for (int i = 0; i < ser.getArrayList().size(); i++) {
+
+					int fatal = ser.getArrayList().get(i).getTotalFatalInjuries();
+
+					int x = ser.getArrayList().get(i).getTotalUninjured()
+							+ ser.getArrayList().get(i).getTotalMinorInjuries()
+							+ ser.getArrayList().get(i).getTotalSeriousInjuries();
+
+					if (x != 0) {
+						if (fatal != 0) {
+							if (x > fatal) {
+
+								totalDeadly.add(ser.getArrayList().get(i));
+							}
+						}
+					}
+				}
+
+				for (int x = 0; x < totalDeadly.size(); x++) {
+					System.out.println(StringUtils.rightPad("Make: " + totalDeadly.get(x).getMake(), 20)
+							+ StringUtils.rightPad("  Model: " + totalDeadly.get(x).getModel(), 10));
+
+				}
+				System.out.println("Total deadly accidents = " + totalDeadly.size());
+				break;
 			}
 		}
-	}
 
-	public static void totalDeadly() throws FileNotFoundException {
-
-		System.out.println("\nWould you like to filter these results? Yes/No");
-		System.out.println(">");
-		String userChoice = userInput.nextLine().toLowerCase();
-
-		if (userChoice.equalsIgnoreCase("no")) { // run normal
-
-			ArrayList<CSVObject> totalDeadly = new ArrayList<CSVObject>();
+		else if (userChoice.equalsIgnoreCase("no")) { // run normal
 
 			for (int i = 0; i < ser.getArrayList().size(); i++) {
-				// if(ser.getArrayList().get(i).getTotalFatalInjuries()>0) {
+
 				int fatal = ser.getArrayList().get(i).getTotalFatalInjuries();
 
 				int x = ser.getArrayList().get(i).getTotalUninjured()
@@ -484,16 +612,30 @@ public class Menu {
 				}
 			}
 
-			System.out.println("Total results for fatal accidents where survivors >= perished : " + totalDeadly.size());
-			System.out.println("Would you like to list the accidents Yes/No");
+			System.out.println(
+					"\noTotal results for fatal accidents where survivors >= perished : " + totalDeadly.size());
+
+			System.out.println("\nWould you like to list the accidents? Yes/No");
 			String input = userInput.nextLine().toLowerCase();
 			if (input.equals("yes")) {
 				for (CSVObject csvObject : totalDeadly) {
 					System.out.println(csvObject.AccidentNumber + " " + csvObject.Location);
 				}
 			}
+		}
 
-		} else if (userChoice.equalsIgnoreCase("yes")) {
+	}
+
+	public static void totalNotDeadly() throws FileNotFoundException { 
+																		
+
+		ArrayList<CSVObject> totalNotDeadly = new ArrayList<CSVObject>();
+
+		System.out.println("\nWould you like to filter these results? Yes/No");
+		System.out.println(">");
+		String userChoice = userInput.nextLine().toLowerCase();
+
+		if (userChoice.equalsIgnoreCase("yes")) {
 
 			System.out.println("\nCHOSEN TO FILTER DATA");
 
@@ -506,122 +648,287 @@ public class Menu {
 
 			switch (optionChoice) {
 			case "i":
+
+				do {
+					System.out.println("Enter the start year:");
+					System.out.print("> ");
+				} while (inputDate());
+				for (int e = 0; e <= 10; e++) {
+					for (int i = 0; i < ser.getArrayList().size(); i++) {
+						if (ser.getArrayList().get(i).getTotalFatalInjuries() == 0) {
+
+							if (ser.getArrayList().get(i).getTotalMinorInjuries() >= 0) {
+
+								if (ser.getArrayList().get(i).getTotalSeriousInjuries() >= 0) {
+
+									if (ser.getArrayList().get(i).getTotalUninjured() >= 0) {
+
+										if (ser.getArrayList().get(i).getYear()
+												.equals(Integer.toString(Integer.parseInt(dateInput) + e))) {
+											totalNotDeadly.add(ser.getArrayList().get(i));
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
+				System.out.println(
+						"\nTotal results for fewer fatalities than injuries in an accident: " + totalNotDeadly.size());
+				System.out.println("\nWould you like to list the accidents Yes/No");
+				String input = userInput.nextLine().toLowerCase();
+				if (input.equals("yes")) {
+					for (CSVObject csvObject : totalNotDeadly) {
+						System.out.println(csvObject.getReg() + " " + csvObject.Location);
+					}
+				}
+
+				else {
+				}
+				break;
+
+			case "ii":
+
+				System.out.println("Enter phase of flight to filter by: ");
+				System.out.print("> ");
+
+				String phaseChoice = userInput.nextLine().toUpperCase();
+
+				for (int i = 0; i < ser.getArrayList().size(); i++) {
+					if (ser.getArrayList().get(i).getTotalFatalInjuries() == 0) {
+
+						if (ser.getArrayList().get(i).getTotalMinorInjuries() >= 0) {
+
+							if (ser.getArrayList().get(i).getTotalSeriousInjuries() >= 0) {
+
+								if (ser.getArrayList().get(i).getTotalUninjured() >= 0) {
+
+									if (ser.getArrayList().get(i).getPhases().equals(phaseChoice)) {
+
+										totalNotDeadly.add(ser.getArrayList().get(i));
+									}
+								}
+							}
+						}
+					}
+				}
+				System.out.println(
+						"\nTotal results for fewer fatalities than injuries in an accident: " + totalNotDeadly.size());
+				System.out.println("\nWould you like to list the accidents Yes/No");
+				String listInput = userInput.nextLine().toLowerCase();
+				if (listInput.equals("yes")) {
+					for (CSVObject csvObject : totalNotDeadly) {
+						System.out.println(csvObject.getReg() + " " + csvObject.Location);
+					}
+
+				} else {
+				}
+
+				break;
+
+			case "iii":
+				System.out.println("Filter by Aircraft make and type:");
+
+				for (int i = 0; i < ser.getArrayList().size(); i++) {
+					if (ser.getArrayList().get(i).getTotalFatalInjuries() == 0) {
+
+						if (ser.getArrayList().get(i).getTotalMinorInjuries() >= 0) {
+
+							if (ser.getArrayList().get(i).getTotalSeriousInjuries() >= 0) {
+
+								if (ser.getArrayList().get(i).getTotalUninjured() >= 0) {
+									totalNotDeadly.add(ser.getArrayList().get(i));
+								}
+							}
+						}
+					}
+				}
+
+				for (int x = 0; x < totalNotDeadly.size(); x++) {
+					System.out.println(StringUtils.rightPad("Make: " + totalNotDeadly.get(x).getMake(), 20)
+							+ StringUtils.rightPad("  Model: " + totalNotDeadly.get(x).getModel(), 10));
+				}
+				System.out.println("Total Accidents = " + totalNotDeadly.size());
+				break;
+			}
+
+		} else {
+
+			for (int i = 0; i < ser.getArrayList().size(); i++) {
+				if (ser.getArrayList().get(i).getTotalFatalInjuries() == 0) {
+
+					if (ser.getArrayList().get(i).getTotalMinorInjuries() >= 0) {
+
+						if (ser.getArrayList().get(i).getTotalSeriousInjuries() >= 0) {
+
+							if (ser.getArrayList().get(i).getTotalUninjured() >= 0) {
+								totalNotDeadly.add(ser.getArrayList().get(i));
+							}
+						}
+					}
+				}
+			}
+			System.out.println(
+					"\nTotal results for fewer fatalities than injuries in an accident: " + totalNotDeadly.size());
+			System.out.println("\nWould you like to list the accidents Yes/No");
+			String input = userInput.nextLine().toLowerCase();
+			if (input.equals("yes")) {
+				for (CSVObject csvObject : totalNotDeadly) {
+					System.out.println(csvObject.getReg() + " " + csvObject.Location);
+				}
+			}
+		}
+	}
+
+	public static void totalNoInjuries() throws FileNotFoundException {
+																	
+		ArrayList<CSVObject> totalNoInjuries = new ArrayList<CSVObject>();
+
+		System.out.println("\nWould you like to filter these results? Yes/No");
+		System.out.println(">");
+		String userChoice = userInput.nextLine().toLowerCase();
+
+		if (userChoice.equalsIgnoreCase("yes")) {
+
+			System.out.println("\nCHOSEN TO FILTER DATA");
+
+			System.out.println("Enter option to view:");
+			System.out.println("i) Accident rate for 10 year period.");
+			System.out.println("ii) Phase of Flight");
+			System.out.println("iii) Aircraft Make and Type");
+			System.out.print("> ");
+			String optionChoice = userInput.nextLine().toLowerCase();
+
+			switch (optionChoice) {
+			case "i": //
 				do {
 					System.out.println("Enter the start year:");
 					System.out.print("> ");
 				} while (inputDate());
 
-				ArrayList<CSVObject> fatalAccidentRate = new ArrayList<CSVObject>();
 				for (int e = 0; e <= 10; e++) {
 
 					for (int i = 0; i < ser.getArrayList().size(); i++) {
-						if (ser.getArrayList().get(i).getTotalFatalInjuries() > 0) {
+						if (ser.getArrayList().get(i).getTotalFatalInjuries() == 0) {
 
 							if (ser.getArrayList().get(i).getTotalMinorInjuries() == 0) {
 
 								if (ser.getArrayList().get(i).getTotalSeriousInjuries() == 0) {
 
-									if (ser.getArrayList().get(i).getTotalUninjured() == 0) {
-										// IF DATE IS ON LIST, OUTPUT
+									if (ser.getArrayList().get(i).getTotalUninjured() > 0) {
+
 										if (ser.getArrayList().get(i).getYear()
-												.equals(Integer.toString(Integer.parseInt(dateInput) + e)))
-											fatalAccidentRate.add(ser.getArrayList().get(i));
+												.equals(Integer.toString(Integer.parseInt(dateInput) + e))) {
+											totalNoInjuries.add(ser.getArrayList().get(i));
+										}
 									}
 								}
 							}
 						}
-
 					}
 				}
 
-				// Deadly, but survivors >= perished
-				ArrayList<CSVObject> totalDeadly = new ArrayList<CSVObject>();
+				System.out.println("\nTotal results for accidents with no fatalities: " + totalNoInjuries.size());
+				System.out.println("\nWould you like to list the accidents Yes/No");
+				String input = userInput.nextLine().toLowerCase();
+				if (input.equals("yes")) {
+					for (CSVObject csvObject : totalNoInjuries) {
+						System.out.println(csvObject.getReg() + " " + csvObject.Location);
+					}
+				}
+				break;
+			case "ii":
+
+				System.out.println("Enter phase of flight to filter by: ");
+				System.out.print("> ");
+
+				String phaseChoice = userInput.nextLine().toUpperCase();
 
 				for (int i = 0; i < ser.getArrayList().size(); i++) {
-					// if(ser.getArrayList().get(i).getTotalFatalInjuries()>0) {
-					int fatal = ser.getArrayList().get(i).getTotalFatalInjuries();
+					if (ser.getArrayList().get(i).getTotalFatalInjuries() == 0) {
 
-					int x = (ser.getArrayList().get(i).getTotalUninjured())
-							+ ser.getArrayList().get(i).getTotalMinorInjuries()
-							+ ser.getArrayList().get(i).getTotalSeriousInjuries();
+						if (ser.getArrayList().get(i).getTotalMinorInjuries() == 0) {
 
-					if (x != 0) {
-						if (fatal != 0) {
-							if (x > fatal) {
+							if (ser.getArrayList().get(i).getTotalSeriousInjuries() == 0) {
 
-								totalDeadly.add(ser.getArrayList().get(i));
+								if (ser.getArrayList().get(i).getTotalUninjured() > 0) {
+
+									if (ser.getArrayList().get(i).getPhases().equals(phaseChoice)) {
+
+										totalNoInjuries.add(ser.getArrayList().get(i));
+									}
+
+								}
 							}
 						}
 					}
 				}
 
-				for (CSVObject csvObject : totalDeadly) {
-					System.out.println(csvObject.Location);
+				System.out.println("\nTotal results for accidents with no fatalities in phase: " + phaseChoice + " = "
+						+ totalNoInjuries.size());
+				System.out.println("\nWould you like to list the accidents Yes/No");
+
+				String listChoice = userInput.nextLine().toLowerCase();
+				if (listChoice.equals("yes")) {
+					for (CSVObject csvObject : totalNoInjuries) {
+						System.out.println(csvObject.getReg() + " " + csvObject.Location);
+					}
+
 				}
-				System.out.println("Total results for deadly accidents : " + totalDeadly.size());
+
+				break;
+			case "iii":
+
+				System.out.println("Filter by Aircraft make and type:");
+
+				for (int i = 0; i < ser.getArrayList().size(); i++) {
+					if (ser.getArrayList().get(i).getTotalFatalInjuries() == 0) {
+
+						if (ser.getArrayList().get(i).getTotalMinorInjuries() == 0) {
+
+							if (ser.getArrayList().get(i).getTotalSeriousInjuries() == 0) {
+
+								if (ser.getArrayList().get(i).getTotalUninjured() > 0) {
+
+									totalNoInjuries.add(ser.getArrayList().get(i));
+
+								}
+							}
+						}
+					}
+				}
+				for (int x = 0; x < totalNoInjuries.size(); x++) {
+					System.out.println(StringUtils.rightPad("Make: " + totalNoInjuries.get(x).getMake(), 20)
+							+ StringUtils.rightPad("  Model: " + totalNoInjuries.get(x).getModel(), 10));
+				}
+				System.out.println(totalNoInjuries.size());
+				break;
 			}
+		} else { // end case, just as normal
 
-		}
+			for (int i = 0; i < ser.getArrayList().size(); i++) {
+				if (ser.getArrayList().get(i).getTotalFatalInjuries() == 0) {
 
-	}
+					if (ser.getArrayList().get(i).getTotalMinorInjuries() == 0) {
 
-	public static void totalNoFatalities() throws FileNotFoundException {
+						if (ser.getArrayList().get(i).getTotalSeriousInjuries() == 0) {
 
-		ArrayList<CSVObject> totalNoFatalities = new ArrayList<CSVObject>();
-
-		for (int i = 0; i < ser.getArrayList().size(); i++) {
-			if (ser.getArrayList().get(i).getTotalFatalInjuries() == 0) {
-
-				if (ser.getArrayList().get(i).getTotalMinorInjuries() == 0) {
-
-					if (ser.getArrayList().get(i).getTotalSeriousInjuries() == 0) {
-
-						if (ser.getArrayList().get(i).getTotalUninjured() > 0) {
-							totalNoFatalities.add(ser.getArrayList().get(i));
+							if (ser.getArrayList().get(i).getTotalUninjured() > 0) {
+								totalNoInjuries.add(ser.getArrayList().get(i));
+							}
 						}
 					}
 				}
 			}
-		}
-
-		System.out.println("Total results for accidents with no fatalities: " + totalNoFatalities.size());
-		System.out.println("\nWould you like to list the accidents Yes/No");
-		String input = userInput.nextLine().toLowerCase();
-		if (input.equals("yes")) {
-			for (CSVObject csvObject : totalNoFatalities) {
-				System.out.println(csvObject.getReg() + " " + csvObject.Location);
-			}
-		}
-	}
-
-	public static void totalNotDeadly() throws FileNotFoundException {
-
-		ArrayList<CSVObject> totalNotDeadly = new ArrayList<CSVObject>();
-
-		for (int i = 0; i < ser.getArrayList().size(); i++) {
-			if (ser.getArrayList().get(i).getTotalFatalInjuries() == 0) {
-
-				if (ser.getArrayList().get(i).getTotalMinorInjuries() >= 0) {
-
-					if (ser.getArrayList().get(i).getTotalSeriousInjuries() >= 0) {
-
-						if (ser.getArrayList().get(i).getTotalUninjured() >= 0) {
-							totalNotDeadly.add(ser.getArrayList().get(i));
-						}
-					}
+			System.out.println("\nTotal results for accidents with no fatalities: " + totalNoInjuries.size());
+			System.out.println("\nWould you like to list the accidents Yes/No");
+			String input = userInput.nextLine().toLowerCase();
+			if (input.equals("yes")) {
+				for (CSVObject csvObject : totalNoInjuries) {
+					System.out.println(csvObject.getReg() + " " + csvObject.Location);
 				}
 			}
 		}
-		System.out
-				.println("\nTotal results for fewer fatalities than injuries in an accident: " + totalNotDeadly.size());
-		System.out.println("\nWould you like to list the accidents Yes/No");
-		String input = userInput.nextLine().toLowerCase();
-		if (input.equals("yes")) {
-			for (CSVObject csvObject : totalNotDeadly) {
-				System.out.println(csvObject.getReg() + " " + csvObject.Location);
-			}
-		}
-
 	}
-
 }
