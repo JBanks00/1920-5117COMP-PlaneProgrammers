@@ -4,7 +4,11 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import javax.tools.OptionChecker;
 
@@ -102,7 +106,9 @@ public class Menu {
 			case "6":
 				accidentRate();
 				break;
-
+			case "7":
+				reverseAccidentRate();
+				break;
 			case "Q":
 				menuLoop = false;
 				break;
@@ -122,11 +128,106 @@ public class Menu {
 		System.out.println("4. Accident Summary");
 		System.out.println("5. Plane Registration Seach");
 		System.out.println("6. Calcualte Accident Rate (10 year)");
+		System.out.println("7. Calcualte Accident Rate (reverse)");
 		System.out.println("Q. Quit");
 		System.out.print("> ");
 		String choice = userInput.nextLine();
 
 		return choice.toUpperCase();
+	}
+
+	public static Map<String, Integer> sortedByValue(final Map<String, Integer> input) {
+		return input.entrySet().stream().sorted((Map.Entry.<String, Integer>comparingByValue().reversed()))
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+
+	}
+
+	public static void reverseAccidentRate() {
+		System.out.println("Enter option to view:");
+		System.out.println("i) Ordered (Highest to Lowest) Accident rate for 10 year period.");
+		System.out.println("ii) Ordered (Highest to Lowest) Fatality count for 10 year period");
+		System.out.print("> ");
+
+		switch (userInput.nextLine().toLowerCase()) {
+		case "i":
+			do {
+				System.out.println("Enter the start year:");
+				System.out.print("> ");
+
+			} while (inputDate());
+
+			ArrayList<CSVObject> accidents = new ArrayList<CSVObject>();
+			for (int i = 0; i <= 10; i++) {
+				for (int j = 0; j < ser.getArrayList().size(); j++) {
+					if (ser.getArrayList().get(j).getYear().equals(Integer.toString(Integer.parseInt(dateInput) + i))) {
+						accidents.add(ser.getArrayList().get(j));
+					}
+				}
+			}
+
+			HashMap<String, Integer> frequencymap = new HashMap<String, Integer>();
+
+			for (CSVObject obj : accidents) {
+				String make = obj.getMake() + " " + obj.getModel();
+				if (frequencymap.containsKey(make)) {
+					frequencymap.put(make, frequencymap.get(make) + 1);
+				} else {
+					frequencymap.put(make, 1);
+				}
+			}
+
+			final Map<String, Integer> sortedByCount = sortedByValue(frequencymap);
+
+			System.out.println("The following plane(s) type(s) have the most recorded accidents.");
+			for (String s : sortedByCount.keySet()) {
+				String key = s;
+				int value = Integer.parseInt(sortedByCount.get(s).toString());
+				System.out.println(key + " with " + value + " accidents");
+			}
+
+			System.out.println();
+			break;
+		case "ii":
+			do {
+				System.out.println("Enter the start year:");
+				System.out.print("> ");
+
+			} while (inputDate());
+
+			ArrayList<CSVObject> fatalities = new ArrayList<CSVObject>();
+			for (int i = 0; i <= 10; i++) {
+				for (int j = 0; j < ser.getArrayList().size(); j++) {
+					if (ser.getArrayList().get(j).getYear().equals(Integer.toString(Integer.parseInt(dateInput) + i))) {
+						if (ser.getArrayList().get(j).getTotalFatalInjuries() > 0) {
+							fatalities.add(ser.getArrayList().get(j));
+						}
+					}
+				}
+			}
+
+			HashMap<String, Integer> frequencymap2 = new HashMap<String, Integer>();
+
+			for (CSVObject obj : fatalities) {
+				String make = obj.getMake() + " " + obj.getModel();
+				frequencymap2.put(make, obj.getTotalFatalInjuries());
+
+			}
+
+			final Map<String, Integer> sortedByCount2 = sortedByValue(frequencymap2);
+
+			for (String s : sortedByCount2.keySet()) {
+				String key = s;
+				int value = Integer.parseInt(sortedByCount2.get(s).toString());
+				System.out.println(key + " with " + value + " fatalities");
+
+			}
+
+			System.out.println();
+			break;
+		default:
+			break;
+		}
+
 	}
 
 	public static void regSearch() throws FileNotFoundException {
@@ -218,7 +319,7 @@ public class Menu {
 				String key = s;
 				int value = Integer.parseInt(frequencymap.get(s).toString());
 				if (value == val) {
-					System.out.println(key);
+					System.out.println(key + " with " + val + " accidents");
 				}
 			}
 
@@ -465,7 +566,7 @@ public class Menu {
 		}
 	}
 
-	public static void totalDeadly() throws FileNotFoundException { 
+	public static void totalDeadly() throws FileNotFoundException {
 
 		ArrayList<CSVObject> totalDeadly = new ArrayList<CSVObject>();
 
@@ -626,8 +727,7 @@ public class Menu {
 
 	}
 
-	public static void totalNotDeadly() throws FileNotFoundException { 
-																		
+	public static void totalNotDeadly() throws FileNotFoundException {
 
 		ArrayList<CSVObject> totalNotDeadly = new ArrayList<CSVObject>();
 
@@ -782,7 +882,7 @@ public class Menu {
 	}
 
 	public static void totalNoInjuries() throws FileNotFoundException {
-																	
+
 		ArrayList<CSVObject> totalNoInjuries = new ArrayList<CSVObject>();
 
 		System.out.println("\nWould you like to filter these results? Yes/No");
