@@ -34,32 +34,41 @@ public class Menu {
 
 				ArrayList<String> years = new ArrayList<String>();
 
+				
 				for (int i = 0; i < ser.getArrayList().size(); i++) {
 					if (!(years.contains(ser.getArrayList().get(i).getYear()))) {
 						years.add(ser.getArrayList().get(i).getYear());
 					}
 				}
+				
+				
 
+				
 				Collections.sort(years);
 
 				for (String string : years) {
 					System.out.println(string);
 				}
+
 				break;
 			case "2":
 				System.out.println("List all phases of flight data");
 
 				ArrayList<String> phases = new ArrayList<String>();
+				long time = System.currentTimeMillis();
 
 				for (int i = 0; i < ser.getArrayList().size(); i++) {
 					if (!(phases.contains(ser.getArrayList().get(i).getPhases()))) {
 						phases.add(ser.getArrayList().get(i).getPhases());
 					}
 				}
+				
+				long time2 = System.currentTimeMillis();
 
 				for (String string : phases) {
 					System.out.println(string);
 				}
+				System.out.println("Time taken: " +(time2-time));
 
 				break;
 			case "3":
@@ -156,7 +165,6 @@ public class Menu {
 				System.out.print("> ");
 
 			} while (inputDate());
-			long now = System.currentTimeMillis();/////////////////////////////////
 
 			ArrayList<CSVObject> accidents = new ArrayList<CSVObject>();
 			for (int j = 0; j < ser.getArrayList().size(); j++) {
@@ -187,9 +195,6 @@ public class Menu {
 				System.out.println(key + " with " + value + " accidents");
 			}
 
-			long after = System.currentTimeMillis();//////////////////////////////
-			long total = after - now;///////////////////////////////////////////////
-			System.out.println("TOTAL TIME: " + total + "ms");////////////////////
 			System.out.println();
 			break;
 		case "ii":
@@ -332,11 +337,13 @@ public class Menu {
 				System.out.print("> ");
 
 			} while (inputDate());
+			
+			
 
 			ArrayList<CSVObject> accidents = new ArrayList<CSVObject>();
 
-			for (int i = 0; i <= 10; i++) {
-				for (int j = 0; j < ser.getArrayList().size(); j++) {
+			for (int j = 0; j < ser.getArrayList().size(); j++) {
+				for (int i = 0; i <= 10; i++) {
 					if (ser.getArrayList().get(j).getYear().equals(Integer.toString(Integer.parseInt(dateInput) + i))) {
 						accidents.add(ser.getArrayList().get(j));
 					}
@@ -372,8 +379,14 @@ public class Menu {
 				}
 			}
 
+
+			
+			
+			
+			
 			System.out.println();
 			break;
+			
 		case "ii":
 			do {
 				System.out.println("Enter the start year:");
@@ -383,8 +396,8 @@ public class Menu {
 
 			ArrayList<CSVObject> fatalities = new ArrayList<CSVObject>();
 
-			for (int i = 0; i <= 10; i++) {
-				for (int j = 0; j < ser.getArrayList().size(); j++) {
+			for (int j = 0; j < ser.getArrayList().size(); j++) {
+				for (int i = 0; i <= 10; i++) {
 					if (ser.getArrayList().get(j).getYear().equals(Integer.toString(Integer.parseInt(dateInput) + i))) {
 						if (ser.getArrayList().get(j).getTotalFatalInjuries() > 0) {
 							fatalities.add(ser.getArrayList().get(j));
@@ -418,7 +431,7 @@ public class Menu {
 					System.out.println(key + " with " + val2 + " fatalities");
 				}
 			}
-
+			
 			System.out.println();
 			break;
 		default:
@@ -487,18 +500,15 @@ public class Menu {
 					System.out.println("Enter the start year:");
 					System.out.print("> ");
 				} while (inputDate());
+				long now = System.currentTimeMillis();/////////////////////////////////
 
-				for (int e = 0; e <= 10; e++) {
-					for (int i = 0; i < ser.getArrayList().size(); i++) {
+				for (int i = 0; i < ser.getArrayList().size(); i++) {
+					for (int e = 0; e <= 10; e++) {
 						if (ser.getArrayList().get(i).getTotalFatalInjuries() > 0) {
-
 							if (ser.getArrayList().get(i).getTotalMinorInjuries() == 0) {
-
 								if (ser.getArrayList().get(i).getTotalSeriousInjuries() == 0) {
-
 									if (ser.getArrayList().get(i).getTotalUninjured() == 0) {
-										if (ser.getArrayList().get(i).getYear()
-												.equals(Integer.toString(Integer.parseInt(dateInput) + e)))
+										if (ser.getArrayList().get(i).getYear().equals(Integer.toString(Integer.parseInt(dateInput) + e)))
 											fatalAccidentRate.add(ser.getArrayList().get(i));
 									}
 								}
@@ -512,6 +522,10 @@ public class Menu {
 				}
 				System.out.println("Accidents =" + fatalAccidentRate.size());
 				System.out.println();
+
+				long after = System.currentTimeMillis();//////////////////////////////
+				long total = after - now;///////////////////////////////////////////////
+				System.out.println("TOTAL TIME: " + total + "ms");////////////////////
 				break;
 
 			case "ii": {
@@ -803,8 +817,8 @@ public class Menu {
 					System.out.print("> ");
 				} while (inputDate());
 
-				for (int e = 0; e <= 10; e++) {
-					for (int i = 0; i < ser.getArrayList().size(); i++) {
+				for (int i = 0; i < ser.getArrayList().size(); i++) {
+					for (int e = 0; e <= 10; e++) {
 						if (ser.getArrayList().get(i).getTotalFatalInjuries() == 0) {
 
 							if (ser.getArrayList().get(i).getTotalMinorInjuries() >= 0) {
@@ -957,9 +971,9 @@ public class Menu {
 					System.out.print("> ");
 				} while (inputDate());
 
-				for (int e = 0; e <= 10; e++) {
+				for (int i = 0; i < ser.getArrayList().size(); i++) {
 
-					for (int i = 0; i < ser.getArrayList().size(); i++) {
+					for (int e = 0; e <= 10; e++) {
 						if (ser.getArrayList().get(i).getTotalFatalInjuries() == 0) {
 
 							if (ser.getArrayList().get(i).getTotalMinorInjuries() == 0) {
@@ -1042,7 +1056,6 @@ public class Menu {
 								if (ser.getArrayList().get(i).getTotalUninjured() > 0) {
 
 									totalNoInjuries.add(ser.getArrayList().get(i));
-
 								}
 							}
 						}
