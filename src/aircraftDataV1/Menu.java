@@ -1,8 +1,10 @@
 package aircraftDataV1;
 
 import java.io.FileNotFoundException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,7 +18,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import aircraftDataV1.CSV.CSVObject;
 import aircraftDataV1.CSV.Serialisation;
-import jdk.nashorn.internal.objects.annotations.Where;
 
 public class Menu {
 
@@ -38,11 +39,12 @@ public class Menu {
 						years.add(ser.getArrayList().get(i).getYear());
 					}
 				}
+
 				Collections.sort(years);
+
 				for (String string : years) {
 					System.out.println(string);
 				}
-
 				break;
 			case "2":
 				System.out.println("List all phases of flight data");
@@ -51,12 +53,10 @@ public class Menu {
 
 				for (int i = 0; i < ser.getArrayList().size(); i++) {
 					if (!(phases.contains(ser.getArrayList().get(i).getPhases()))) {
-						// CSVObject object = ser2.getArrayList().get(i);
-						// System.out.println(object.toString());
 						phases.add(ser.getArrayList().get(i).getPhases());
 					}
 				}
-				// Collections.sort(phases);
+
 				for (String string : phases) {
 					System.out.println(string);
 				}
@@ -81,6 +81,7 @@ public class Menu {
 						reports.add(ser.getArrayList().get(i));
 					}
 				}
+
 				if (reports.size() == 0) {
 					System.out.println("No Matching Data");
 					break;
@@ -155,6 +156,7 @@ public class Menu {
 				System.out.print("> ");
 
 			} while (inputDate());
+			long now = System.currentTimeMillis();/////////////////////////////////
 
 			ArrayList<CSVObject> accidents = new ArrayList<CSVObject>();
 			for (int i = 0; i <= 10; i++) {
@@ -185,6 +187,9 @@ public class Menu {
 				System.out.println(key + " with " + value + " accidents");
 			}
 
+			long after = System.currentTimeMillis();//////////////////////////////
+			long total = after - now;///////////////////////////////////////////////
+			System.out.println("TOTAL TIME: " + total + "ms");////////////////////
 			System.out.println();
 			break;
 		case "ii":
@@ -238,10 +243,50 @@ public class Menu {
 
 		String planeSearch = userInput.nextLine();
 		for (int i = 0; i < ser.getArrayList().size(); i++) {
-			if (ser.getArrayList().get(i).getReg().equals(planeSearch)) {
+			if (ser.getArrayList().get(i).getReg().startsWith(planeSearch)) {
 				planes.add(ser.getArrayList().get(i));
 			}
 		}
+
+
+
+		String inp = "";
+		System.out.println("Would you like to order the results? Y|N");
+		inp = userInput.nextLine();
+		while (true) {
+			if (inp.equalsIgnoreCase("Y") || inp.equalsIgnoreCase("N")) {
+				break;
+			} else {
+				System.out.println("Invalid entry entered.\n");
+				System.out.println("Would you like to order the results? Y|N");
+				inp = userInput.nextLine();
+			}
+		}
+
+		if (inp.equals("Y")) {
+			System.out.println("Search by:\n1. Location Asc\n2. Location Desc\n3. Reg Asc\n4. Reg Desc");
+			switch (userInput.nextLine()) {
+			case "1":
+				planes.sort(Comparator.comparing(CSVObject::getLocation));
+
+				break;
+			case "2":
+				Collections.sort(planes, Collections.reverseOrder(Comparator.comparing(CSVObject::getLocation))); // Reverse
+
+				break;
+			case "3":
+				planes.sort(Comparator.comparing(CSVObject::getReg));
+
+				break;
+			case "4":				
+				Collections.sort(planes, Collections.reverseOrder(Comparator.comparing(CSVObject::getReg))); // Reverse
+
+				break;
+			default:
+				break;
+			}
+		}
+
 		System.out.println("Event ID:        Event Date:     " + StringUtils.rightPad("Location:", 25)
 				+ StringUtils.rightPad("Reg:", 8) + StringUtils.rightPad("Total Fatal:", 14)
 				+ StringUtils.rightPad("Total Serious:", 16) + StringUtils.rightPad("Total Minor:", 14)
@@ -250,6 +295,9 @@ public class Menu {
 		for (CSVObject obj : planes) {
 			System.out.println(obj.regInfo());
 		}
+		if (planes.size() == 0) {
+		}
+		System.out.println("No matching data found");
 	}
 
 	public static String dateInput;
@@ -286,6 +334,7 @@ public class Menu {
 			} while (inputDate());
 
 			ArrayList<CSVObject> accidents = new ArrayList<CSVObject>();
+
 			for (int i = 0; i <= 10; i++) {
 				for (int j = 0; j < ser.getArrayList().size(); j++) {
 					if (ser.getArrayList().get(j).getYear().equals(Integer.toString(Integer.parseInt(dateInput) + i))) {
@@ -333,6 +382,7 @@ public class Menu {
 			} while (inputDate());
 
 			ArrayList<CSVObject> fatalities = new ArrayList<CSVObject>();
+
 			for (int i = 0; i <= 10; i++) {
 				for (int j = 0; j < ser.getArrayList().size(); j++) {
 					if (ser.getArrayList().get(j).getYear().equals(Integer.toString(Integer.parseInt(dateInput) + i))) {
@@ -439,7 +489,6 @@ public class Menu {
 				} while (inputDate());
 
 				for (int e = 0; e <= 10; e++) {
-
 					for (int i = 0; i < ser.getArrayList().size(); i++) {
 						if (ser.getArrayList().get(i).getTotalFatalInjuries() > 0) {
 
@@ -753,6 +802,7 @@ public class Menu {
 					System.out.println("Enter the start year:");
 					System.out.print("> ");
 				} while (inputDate());
+
 				for (int e = 0; e <= 10; e++) {
 					for (int i = 0; i < ser.getArrayList().size(); i++) {
 						if (ser.getArrayList().get(i).getTotalFatalInjuries() == 0) {
@@ -773,7 +823,6 @@ public class Menu {
 						}
 					}
 				}
-
 				System.out.println(
 						"\nTotal results for fewer fatalities than injuries in an accident: " + totalNotDeadly.size());
 				System.out.println("\nWould you like to list the accidents Yes/No");
@@ -869,6 +918,7 @@ public class Menu {
 					}
 				}
 			}
+
 			System.out.println(
 					"\nTotal results for fewer fatalities than injuries in an accident: " + totalNotDeadly.size());
 			System.out.println("\nWould you like to list the accidents Yes/No");
